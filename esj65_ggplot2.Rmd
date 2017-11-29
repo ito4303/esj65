@@ -1,0 +1,85 @@
+---
+title: "ggplot2をつかってみる"
+author: "伊東宏樹"
+date: "2018-03-14"
+institute: "森林総合研究所北海道支所"
+output:
+  beamer_presentation:
+    latex_engine: lualatex
+    keep_tex: true
+    includes:
+      in_header: header.tex
+mainfont: NotoSansCJKjp
+sansfont: NotoSansCJKjp
+monofont: NotoSansMonoCJKjp
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+#knitr::opts_chunk$set(dev="cairo_pdf", dev.args=list(family="IPAexGothic"))
+knitr::opts_chunk$set(dev="cairo_pdf")
+library(ggplot2)
+library(dplyr)
+```
+
+## このごろよくみるこのようなグラフ
+
+```{r introduction, fig.width = 5, fig.height = 3, echo = FALSE}
+ggplot(data = iris,
+       mapping = aes(x = Sepal.Length, y = Sepal.Width,
+                     colour = Species)) +
+  geom_point(size = 2) +
+  scale_colour_manual(labels = c(expression(italic("I. setosa")),
+                                 expression(italic("I. versicolor")),
+                                 expression(italic("I. virginica"))),
+                      values = c("#ff2800", "#0041ff", "#ff9900"),
+                      guide = guide_legend(label.hjust = 0)) +
+  labs(x = "Sepal length (cm)", y = "Sepal width (cm)") +
+  theme_grey(base_family = "Helvetica", base_size = 12)
+```
+
+## ggplot2
+
+- Grammer of Graphics
+- 統一した文法
+- 関連パッケージもどんどんできている
+
+## さっそくつかってみる
+
+アヤメデータを使用
+
+```{r iris_data, echo = TRUE, size = '\\footnotesize'}
+data(iris)
+head(iris)
+```
+
+## ggplot関数
+
+```{r ggplot_func, echo = TRUE}
+p <- ggplot(data = iris,
+       mapping = aes(x = Sepal.Length,
+                     y = Sepal.Width,
+                     colour = Species))
+```
+
+## geom関数
+
+```{r geom_func, fig.width = 5, fig.height = 3, echo = TRUE}
+p + geom_point()
+```
+
+## 点を大きくする
+
+```{r point_size, fig.width = 5, fig.height = 3, echo = TRUE}
+p2 <- p + geom_point(size = 2.5)
+print(p2)
+```
+
+
+## ラベルに漢字をつかう
+IPAexフォントはインストールしておく（利用可能なフォントであればそれを指定してもよい）
+```{r font, fig.width = 5, fig.height = 2.5, echo = TRUE}
+p2 + labs(x = "萼の長さ(cm)", y = "萼の幅(cm)") +
+  theme_grey(base_family = "IPAexGothic")
+```
+

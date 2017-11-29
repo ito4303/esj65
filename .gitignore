@@ -31,3 +31,9 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user
+*_files/
+
+esj65_ggplot2.pdf
+esj65_ggplot2.tex
+

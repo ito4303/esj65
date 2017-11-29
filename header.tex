@@ -1,0 +1,16 @@
+%% Japanese font
+\usepackage{luatexja}
+\usepackage[noto-otf,deluxe]{luatexja-preset}
+\setmainjfont{NotoSansCJKjp}
+
+%% change fontsize of R code
+\let\oldShaded\Shaded
+\let\endoldShaded\endShaded
+\renewenvironment{Shaded}{\small\oldShaded}{\endoldShaded}
+
+%% change fontsize of output
+\let\oldverbatim\verbatim
+\let\endoldverbatim\endverbatim
+\renewenvironment{verbatim}{\footnotesize\oldverbatim}{\endoldverbatim}
+
+\setbeamerfont{title}{size=\Huge}
