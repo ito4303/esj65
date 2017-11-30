@@ -3,6 +3,7 @@
 \usepackage[noto-otf,deluxe]{luatexja-preset}
 \setmainjfont{NotoSansCJKjp}
 
+%% https://stackoverflow.com/questions/38323331/code-chunk-font-size-in-beamer-with-knitr-and-latex
 %% change fontsize of R code
 \let\oldShaded\Shaded
 \let\endoldShaded\endShaded
@@ -13,4 +14,5 @@
 \let\endoldverbatim\endverbatim
 \renewenvironment{verbatim}{\footnotesize\oldverbatim}{\endoldverbatim}
 
+%% Title font size
 \setbeamerfont{title}{size=\Huge}
