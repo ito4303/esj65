@@ -1,7 +1,16 @@
-%% Japanese font
+%% Fonts
+\usepackage{fontspec}
+%\setmainfont[Ligatures=TeX]{TeXGyreTermes}
+\setmainfont[Ligatures=TeX]{TeXGyreHeros}
+\setsansfont[Ligatures=TeX]{TeXGyreHeros}
+%\setmonofont{Inconsolatazi4}
+\setmonofont{NotoSansMonoCJKjp} % Notoフォント使用
+
+%% Japanese fonts
 \usepackage{luatexja}
 \usepackage[noto-otf,deluxe]{luatexja-preset}
 \setmainjfont{NotoSansCJKjp}
+\setsansjfont{NotoSansCJKjp}
 
 %% https://stackoverflow.com/questions/38323331/code-chunk-font-size-in-beamer-with-knitr-and-latex
 %% change fontsize of R code
@@ -15,4 +24,5 @@
 \renewenvironment{verbatim}{\footnotesize\oldverbatim}{\endoldverbatim}
 
 %% Title font size
-\setbeamerfont{title}{size=\Huge}
+\setbeamerfont{title}{size=\Huge, series=\bfseries}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
