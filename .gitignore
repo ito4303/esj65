@@ -34,6 +34,7 @@ vignettes/*.pdf
 .Rproj.user
 *_files/
 
+.DS_Store
 esj65_ggplot2.pdf
 esj65_ggplot2.tex
 

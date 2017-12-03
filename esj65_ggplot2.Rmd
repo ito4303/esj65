@@ -37,9 +37,12 @@ ggplot(data = iris,
 
 ## ggplot2
 
-- Grammer of Graphics
-- 統一した文法
-- 関連パッケージもどんどんできている
+- \Large Grammer of Graphics
+
+- \Large 統一された文法でさまざまな種類のグラフを描ける
+
+- \Large 関連パッケージもどんどんできている
+    - GGally, ggmcmc, ggmap,\dots
 
 ## ここでの目的1
 
@@ -50,6 +53,7 @@ ggplot(data = iris,
 
 >- \Large グラフを作成するのに、手作業（コピー&ペースト）をなくす
 >- \Large R（と、RStudioなど）で自動化する
+
 >- \Huge\bfseries → 手作業に由来するまちがいがなくなる
 
 ## さっそくつかってみる
@@ -61,22 +65,29 @@ head(iris)
 
 ## ggplot関数
 
-```{r ggplot_func, echo=TRUE}
-p <- ggplot(data = iris,
-            mapping = aes(x = Sepal.Length,
-                          y = Sepal.Width))
+ggplotオブジェクトを生成する。
+
+```{r ggplot_func,fig.width=5, fig.height=3, echo=TRUE}
+p <- ggplot(data = iris)
+print(p)
 ```
 
 ## geom関数
-geom_point: 散布図
-```{r geom_func, fig.width=5, fig.height=3, echo=TRUE}
-p + geom_point()
+
+geom_point関数: 散布図を描画（レイヤーに追加）する関数
+
+mapping引数: 変数のマッピングを渡す
+
+aes関数: 変数とグラフ要素とのaesthetic mapping
+```{r geom_func, fig.width=5, fig.height=2.5, echo=TRUE}
+p + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width))
 ```
 
 ## 種類ごとに色をかえる
 
 ```{r colour, fig.width=5, fig.height=3, echo=TRUE}
-p + geom_point(mapping = aes(colour = Species))
+p + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width,
+                             colour = Species))
 ```
 
 ## こうしてもおなじ
@@ -90,24 +101,29 @@ ggplot(data = iris,
 ## 点を大きくする
 
 ```{r point_size, fig.width=5, fig.height=3, echo=TRUE}
-p + geom_point(aes(colour = Species), size = 4)
+p + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width,
+                             colour = Species), size = 4)
 ```
 
 ## 種類ごとに点の形をかえる
 
 ```{r point_shape, fig.width=5, fig.height=3, echo=TRUE}
-p2 <- p + geom_point(aes(colour = Species, shape = Species),
+p2 <- p + geom_point(aes(x = Sepal.Length, y = Sepal.Width,
+                         colour = Species, shape = Species),
                      size = 2.5, alpha = 0.7)
 print(p2)
 ```
 
 ## 色を指定する
+
 ```{r spec_colour, fig.width=5, fig.height=3, echo=TRUE}
 p2 + scale_colour_manual(values = c("blue", "red", "#663377"))
 ```
 
 ## ラベルに漢字をつかう
+
 IPAexフォントをインストールしておく（利用可能なフォントであればそれを指定してもよい）
+
 ```{r font, dev="cairo_pdf", fig.width=5, fig.height=2.5, echo=TRUE}
 p2 + labs(x = "萼の長さ(cm)", y = "萼の幅(cm)") +
   scale_colour_discrete(name = "種") +  scale_shape_discrete(name = "種") +
@@ -115,6 +131,7 @@ p2 + labs(x = "萼の長さ(cm)", y = "萼の幅(cm)") +
 ```
 
 ## 凡例をかえる
+
 ```{r legend, dev="cairo_pdf", fig.width=5, fig.height=2.5, echo=TRUE}
 p2 + labs(x = "萼の長さ(cm)", y = "萼の幅(cm)") +
   scale_colour_discrete(name = "種",
@@ -126,12 +143,15 @@ p2 + labs(x = "萼の長さ(cm)", y = "萼の幅(cm)") +
 
 
 ## 軸の範囲を指定する
+
 xlim, ylim
+
 ```{r axes_lim, fig.width=5, fig.height=3, echo=TRUE}
 p2 + xlim(4, 8) + ylim(1, 5)
 ```
 
 ## 対数軸にする
+
 ```{r axes_log, fig.width=5, fig.height=3, echo=TRUE}
 p2 +
   scale_x_log10(limits = c(2, 8), breaks = c(2, 4, 8)) +
@@ -139,23 +159,28 @@ p2 +
 ```
 
 ## Facet
+
 種ごとに分割して表示
+
 ```{r facet, fig.width=5, fig.height=2.5, echo=TRUE}
-p + geom_point() + facet_wrap(~ Species)
+p2 + facet_wrap(~ Species)
 ```
 
 
 ## themeをかえる
+
 ```{r theme_bw, fig.width=5, fig.height=2.5, echo=TRUE}
 p2 + theme_bw()
 ```
 
 ## themeをかえる
+
 ```{r theme_classic, fig.width=5, fig.height=2.7, echo=TRUE}
 p2 + theme_classic()
 ```
 
 ## themeで こまかい調整
+
 ```{r theme, fig.width=5, fig.height=2.75, echo=TRUE}
 p2 + theme_bw() +
   theme(legend.position = "bottom",
@@ -164,6 +189,7 @@ p2 + theme_bw() +
 ```
 
 ## いろいろ調整したグラフ
+
 ```{r setting, echo=TRUE}
 p <- ggplot(data = iris,
             mapping = aes(x = Sepal.Length, y = Sepal.Width,
@@ -179,11 +205,13 @@ p <- ggplot(data = iris,
 ```
 
 ## いろいろ調整したグラフ
+
 ```{r setting2, fig.width=5, fig.height=3.5}
 print(p)
 ```
 
 ## ほかの種類のグラフは
+
 geom_*
 
 - geom_bar
@@ -192,10 +220,12 @@ geom_*
 - geom_histogram
 - geom_line
 - geom_polygon
+- geom_ribbon
 
 などなど
 
 ## 折れ線グラフ
+
 ```{r random_walk, include=FALSE}
 set.seed(1)
 x <- rep(NA, 20)
@@ -204,27 +234,30 @@ for (t in 2:20)
   x[t] <- x[t - 1] + rnorm(1, 0, 1)
 ```
 
-ランダムウォークのデータ
-
 geom_line
+
+xはランダムウォークのベクトル
+
 ```{r geom_line1, fig.width=5, fig.height=2.75, echo=TRUE}
 p <- ggplot(data.frame(t = 1:20, x = x), aes(t, x))
 p + geom_line()
 ```
 
 ## 折れ線グラフ+点
+
 ```{r geom_line2, fig.width=5, fig.height=2.75, echo = TRUE}
 p + geom_line() + geom_point(size = 3)
 ```
 
 ## アラカシの年輪データ
-Itô and Sumida (2017) Allometric and growth data of an evergreen oak, 
+データ: Itô and Sumida (2017) Allometric and growth data of an evergreen oak, 
 Quercus glauca, in a secondary broadleaved forest. Ecol. Res 32:105-105
 doi:10.1007/s11284-016-1424-1
 
 \footnotesize CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/legalcode
 
-地際 (Height == 0) の各年の直径(mm)を使用しました。
+地際 (Height == 0) の各年の直径(mm)を使用
+
 ```{r read_tree_ring_data, include=FALSE}
 library(readr)
 data <- read_csv("Tree_ring_data.csv") %>%
@@ -239,6 +272,7 @@ head(data)
 ```
 
 ## geom_lineで表示
+
 ```{r geom_line3, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data = data, mapping = aes(x = Y, y = Diameter)) +
   geom_line()
@@ -252,16 +286,18 @@ ggplot(data = data, mapping = aes(x = Y, y = Diameter, colour = No)) +
 ```
 
 ## 箱ひげ図
-ふたたびアヤメデータ
 
 geom_boxplot
+
 ```{r boxplot, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data = iris) +
   geom_boxplot(aes(x = Species, y = Sepal.Width))
 ```
 
 ## ヒストグラム
+
 geom_histogram
+
 ```{r histogram, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data = iris) +
   geom_histogram(aes(x = Sepal.Length, fill = Species),
@@ -269,7 +305,9 @@ ggplot(data = iris) +
 ```
 
 ## ヒストグラム
+
 position = "dodge": 積み重ねずに ずらす
+
 ```{r histogram2, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data = iris) +
   geom_histogram(aes(x = Sepal.Length, fill = Species),
@@ -277,7 +315,9 @@ ggplot(data = iris) +
 ```
 
 ## 密度
+
 geom_density
+
 ```{r geom_density, fig.width=5, fig.height=2.75, echo=TRUE}
 p <- ggplot(data = iris) +
   geom_density(aes(x = Sepal.Length, fill = Species), alpha = 0.5)
@@ -285,7 +325,9 @@ print(p)
 ```
 
 ## テキストをはりこむ
+
 annotate
+
 ```{r annotate, fig.width=5, fig.height=2.75, echo=TRUE}
 p + theme(legend.position = "none") +
   annotate("text", x = 5, y = 0.6, label = "setosa") +
@@ -295,7 +337,9 @@ p + theme(legend.position = "none") +
 
 
 ## 棒グラフ
+
 geom_bar
+
 ```{r geom_bar, fig.width=5, fig.height=2.25, echo=TRUE}
 set.seed(1)
 h <- hist(rnorm(400, 0, 1), plot = FALSE)
@@ -305,27 +349,41 @@ print(p)
 ```
 
 ## 関数をかさねる
+
 stat_function
+
 ```{r stat_function, fig.width=5, fig.height=2.75, echo=TRUE}
 p + stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
                   geom = "line") 
 ```
 
 ## 別のデータを重ねる
+
+```{r Nile_data, include=FALSE}
+data(Nile)
+data1 <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
+                    Level = c(Nile))
+library(dlm)
+mod <- dlmModPoly(order = 1, dV = 1000, dW = 100)
+nile_filter <- dlmFilter(Nile, mod)
+data2 <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
+                    Filtered = dropFirst(nile_filter$m))
+```
+
+ナイル川の水位
+
 ```{r data21, fig.width=5, fig.height=2.25, echo=TRUE}
-set.seed(12)
-data1 <- data.frame(x = 1:20, y = rnorm(20, 0, 1))
-data2 <- data1 %>%
-  mutate(ymin = data1$y + qnorm(0.025, 0, 1),
-         ymax = data1$y + qnorm(0.975, 0, 1))
-p1 <- ggplot(data1, aes(x, y)) + geom_line()
+p1 <- ggplot(data1) + geom_line(aes(x = Year, y = Level))
 print(p1)
 ```
 
 ## 別のデータを重ねる
+
+カルマンフィルタを通した値（赤線）を重ねる
+
 ```{r geom_ribbon, fig.width=5, fig.height=2.75, echo=TRUE}
-p1 + geom_ribbon(data = data2,
-                 aes(x = x, ymin = ymin, ymax = ymax), alpha = 0.5)
+p1 + geom_line(data = data2,
+               mapping = aes(x = Year, y = Filtered), colour = "red")
 ```
 
 ## 参考リンク
