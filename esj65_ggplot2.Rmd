@@ -9,9 +9,6 @@ output:
     keep_tex: true
     includes:
       in_header: header.tex
-mainfont: NotoSansCJKjp
-sansfont: NotoSansCJKjp
-monofont: NotoSansMonoCJKjp
 ---
 
 ```{r setup, include=FALSE}
@@ -51,10 +48,12 @@ ggplot(data = iris,
 
 ## ここでの目的2
 
->- \Large グラフを作成するのに、手作業（コピー&ペースト）をなくす
+>- \Large グラフ作成に（だけではなく）、手作業（コピー&ペースト）をなくす
 >- \Large R（と、RStudioなど）で自動化する
 
->- \Huge\bfseries → 手作業に由来するまちがいがなくなる
+>- \LARGE\bfseries → 手作業に由来するまちがいがなくなる
+>- \LARGE\bfseries → Reproducible Research
+
 
 ## さっそくつかってみる
 
@@ -97,7 +96,8 @@ p + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width,
 
 ```{r colour2, fig.width=5, fig.height=3, echo=TRUE}
 ggplot(data = iris,
-       mapping = aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+       mapping = aes(x = Sepal.Length, y = Sepal.Width,
+                     colour = Species)) +
   geom_point()
 ```
 
@@ -129,7 +129,6 @@ IPAexフォントをインストールしておく（利用可能なフォント
 
 ```{r font, dev="cairo_pdf", fig.width=5, fig.height=2.5, echo=TRUE}
 p2 + labs(x = "萼の長さ(cm)", y = "萼の幅(cm)") +
-  scale_colour_discrete(name = "種") +  scale_shape_discrete(name = "種") +
   theme_grey(base_family = "IPAexGothic")
 ```
 
@@ -202,8 +201,10 @@ p <- ggplot(iris) +
   xlim(4, 8) + ylim(2, 5) +
   theme_bw(base_family = "Helvetica", base_size = 12) +
   theme(legend.direction = "horizontal",
-        legend.position = c(0.975, 0.975), legend.justification = c(1, 1),
-        legend.background = element_rect(colour = "black", fill="white"),
+        legend.position = c(0.975, 0.975),
+        legend.justification = c(1, 1),
+        legend.background = element_rect(colour = "black",
+                                         fill="white"),
         legend.text = element_text(face = "italic", size = 10))
 ```
 
@@ -256,7 +257,7 @@ p + geom_line(linetype = 2) + geom_point(size = 3)
 
 ## アラカシの年輪データ
 データ: Itô and Sumida (2017) Allometric and growth data of an evergreen oak, 
-Quercus glauca, in a secondary broadleaved forest. Ecol. Res 32:105-105
+_Quercus glauca_, in a secondary broadleaved forest. Ecol. Res 32:105-105
 doi:10.1007/s11284-016-1424-1
 
 \footnotesize CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/legalcode
@@ -418,37 +419,42 @@ print(p1)
 
 カルマンフィルタを通した値（赤線）と95%信頼区間(灰色の領域)を重ねる。
 
-```{r geom_ribbon, fig.width=5, fig.height=2.75, echo=TRUE}
-p1 + geom_line(data = data2, aes(Year, Filtered), colour = "red") +
+```{r geom_ribbon, fig.width=5, fig.height=2.25, echo=TRUE}
+p1 + geom_line(data = data2, aes(Year, Filtered),
+               colour = "red") +
   geom_ribbon(data = data2,
-              aes(Year, ymin = Lower, ymax = Upper), alpha = 0.5)
+              aes(Year, ymin = Lower, ymax = Upper),
+              alpha = 0.5)
 ```
 
-## 空間点分布
+## XYZのデータ
 
-```{r point_data, fig.width=5, fig.height=2.75, include=FALSE}
-library(readr)
-point_data <- read_csv("point_data.csv")
+島谷(2017) 5.3節より
+
+```{r raster_data, echo=TRUE}
+r <- function(x, y) (-0.00002 * (x - 40)^2 + 0.05) * 0.04 * y
+raster_data <- expand.grid(x = 0:100, y = 0:100) %>%
+  mutate(z = r(x, y))
+raster_data[5000:5005, ]
 ```
 
-```{r point_data2, fig.width=5, fig.height=2.75, echo=TRUE}
-p <- ggplot(point_data, aes(x, y))
-p + geom_point()
+## ラスター
+
+geom_raster
+
+```{r geom_raster, fig.width=5, fig.height=2.75, echo=TRUE}
+p <- ggplot(raster_data, aes(x, y))
+p + geom_raster(aes(fill = z)) + coord_fixed()
 ```
 
-## 密度の等高線
+## 等高線
 
-geom_density_2d
+geom_contour
 
-```{r density_2d, fig.width=5, fig.height=2.75, echo=TRUE}
-p + geom_density_2d()
+```{r geom_contour, fig.width=5, fig.height=2.75, echo=TRUE}
+p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
 ```
 
-## 密度のポリゴングラフ
-
-```{r density_2d_polygon, fig.width=5, fig.height=2.75, echo=TRUE}
-p + stat_density_2d(aes(fill = ..level..), geom = "polygon")
-```
 
 ## 参考リンク
 
@@ -456,7 +462,7 @@ p + stat_density_2d(aes(fill = ..level..), geom = "polygon")
 
 - ggplot2 Reference（公式ドキュメント）
     - http://ggplot2.tidyverse.org/reference/
-- ggplot2に関する資料（前田和寛@kazutanさん）
+- ggplot2に関する資料（前田和寛 `@kazutan' さん）
     - https://kazutan.github.io/kazutanR/ggplot2_links.html
 - ggplot2 — きれいなグラフを簡単に合理的に（岩嵜航さん）
     - https://heavywatal.github.io/rstats/ggplot2.html
