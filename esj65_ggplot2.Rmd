@@ -24,7 +24,7 @@ ggplot(data = iris,
        mapping = aes(x = Sepal.Length, y = Sepal.Width,
                      colour = Species)) +
   geom_point(size = 2) +
-  scale_colour_manual(labels = c("I. setosa", "I. versicolor", "I. virginica"),
+  scale_colour_manual(labels = c("Iris setosa", "I. versicolor", "I. virginica"),
                       values = c("#ff2800", "#ff9900", "#0041ff"),
                       guide = guide_legend(label.hjust = 0)) +
   labs(x = "Sepal length (cm)", y = "Sepal width (cm)") +
@@ -52,7 +52,7 @@ ggplot(data = iris,
 >- \Large R（と、RStudioなど）で自動化する
 
 >- \LARGE\bfseries → 手作業に由来するまちがいがなくなる
->- \LARGE\bfseries → Reproducible Research
+>- \LARGE\bfseries → Reproducible Research（の一部）
 
 
 ## さっそくつかってみる
@@ -75,11 +75,11 @@ print(p)
 
 ## geom関数
 
-**`geom_point`**関数: 散布図を描画（レイヤーに追加）する関数
+**`geom_point`** 関数: 散布図を描画（レイヤーに追加）する関数
 
-`mapping`引数: 変数のマッピングを渡す
+`mapping` 引数: 変数のマッピングを渡す
 
-**`aes`**関数: 変数とグラフ要素とのaesthetic mapping
+**`aes`** 関数: 変数とグラフ要素とのaesthetic mapping
 
 ```{r geom_func, fig.width=5, fig.height=2.5, echo=TRUE}
 p + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width))
@@ -216,7 +216,7 @@ print(p)
 
 ## ほかの種類のグラフは
 
-**`geom_*`**関数
+**`geom_*`** 関数
 
 - **`geom_bar`**
 - **`geom_boxplot`**
@@ -277,13 +277,13 @@ data <- read_csv("Tree_ring_data.csv") %>%
 head(data)
 ```
 
-## **`geom_line`**で表示
+## geom_lineで表示
 
 ```{r geom_line3, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data) + geom_line(aes(Year, Diameter))
 ```
 
-## `colour`を指定
+## colourを指定
 
 ```{r geom_line4, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data) + geom_line(aes(Year, Diameter, colour = No)) +
@@ -379,10 +379,8 @@ p + stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
 
 ## stat_*関数
 
-統計的変換
-
-例) **`stat_count`**: データの頻度分布を計算する
-```{r stat_count, fig.width=5, fig.height=2.1, echo=TRUE}
+統計的変換, 例) **`stat_count`**: データの頻度分布を計算する。
+```{r stat_count, fig.width=5, fig.height=2, echo=TRUE}
 set.seed(1); x <- rpois(200, 2)
 ggplot(data.frame(x = x), aes(x)) + stat_count(geom = "bar")
 ```
