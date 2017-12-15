@@ -75,11 +75,11 @@ print(p)
 
 ## geom関数
 
-`geom_point`関数: 散布図を描画（レイヤーに追加）する関数
+**`geom_point`**関数: 散布図を描画（レイヤーに追加）する関数
 
 `mapping`引数: 変数のマッピングを渡す
 
-`aes`関数: 変数とグラフ要素とのaesthetic mapping
+**`aes`**関数: 変数とグラフ要素とのaesthetic mapping
 
 ```{r geom_func, fig.width=5, fig.height=2.5, echo=TRUE}
 p + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width))
@@ -216,17 +216,17 @@ print(p)
 
 ## ほかの種類のグラフは
 
-`geom_*`関数
+**`geom_*`**関数
 
-- `geom_bar`
-- `geom_boxplot`
-- `geom_contour`
-- `geom_density`
-- `geom_histogram`
-- `geom_line`
-- `geom_polygon`
-- `geom_ribbon`
-- `geom_tile`
+- **`geom_bar`**
+- **`geom_boxplot`**
+- **`geom_contour`**
+- **`geom_density`**
+- **`geom_histogram`**
+- **`geom_line`**
+- **`geom_polygon`**
+- **`geom_ribbon`**
+- **`geom_tile`**
 
 などなど
 
@@ -240,12 +240,12 @@ for (t in 2:20)
   x[t] <- x[t - 1] + rnorm(1, 0, 1)
 ```
 
-geom_line
+**`geom_line`**
 
 `x`はランダムウォークのベクトル
 
 ```{r geom_line1, fig.width=5, fig.height=2.75, echo=TRUE}
-p <- ggplot(data.frame(t = 1:20, x = x), aes(t, x))
+p <- ggplot(data.frame(t = seq_along(x), x = x), aes(t, x))
 p + geom_line()
 ```
 
@@ -256,7 +256,7 @@ p + geom_line(linetype = 2) + geom_point(size = 3)
 ```
 
 ## アラカシの年輪データ
-データ: Itô and Sumida (2017) Allometric and growth data of an evergreen oak, 
+\footnotesize データ: Itô and Sumida (2017) Allometric and growth data of an evergreen oak, 
 _Quercus glauca_, in a secondary broadleaved forest. Ecol. Res 32:105-105
 doi:10.1007/s11284-016-1424-1
 
@@ -277,20 +277,20 @@ data <- read_csv("Tree_ring_data.csv") %>%
 head(data)
 ```
 
-## geom_lineで表示
+## **`geom_line`**で表示
 
 ```{r geom_line3, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data) + geom_line(aes(Year, Diameter))
 ```
 
-## colourを指定
+## `colour`を指定
 
 ```{r geom_line4, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data) + geom_line(aes(Year, Diameter, colour = No)) +
    guides(colour = guide_legend(ncol = 2))
 ```
 
-## groupを指定
+## `group`を指定
 
 ```{r geom_line5, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data) + geom_line(aes(Year, Diameter, group = No))
@@ -299,7 +299,7 @@ ggplot(data) + geom_line(aes(Year, Diameter, group = No))
 
 ## 箱ひげ図
 
-`geom_boxplot`
+**`geom_boxplot`**
 
 ```{r boxplot, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width))
@@ -307,7 +307,7 @@ ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width))
 
 ## XY軸をいれかえる
 
-`coor_flip`
+**`coor_flip`**
 
 ```{r boxplot2, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width)) +
@@ -316,7 +316,7 @@ ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width)) +
 
 ## ヒストグラム
 
-`geom_histogram`
+**`geom_histogram`**
 
 ```{r histogram, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(iris) +
@@ -336,7 +336,7 @@ ggplot(iris) +
 
 ## 密度
 
-`geom_density`
+**`geom_density`**
 
 ```{r geom_density, fig.width=5, fig.height=2.75, echo=TRUE}
 p <- ggplot(iris) +
@@ -346,19 +346,19 @@ print(p)
 
 ## テキストをはりこむ
 
-`annotate`
+**`annotate`**
 
 ```{r annotate, fig.width=5, fig.height=2.75, echo=TRUE}
 p + theme(legend.position = "none") +
   annotate("text", x = 5, y = 0.6, label = "setosa") +
-  annotate("text", x = 5.8, y = 0.53, label = "versicolor") +
-  annotate("text", x = 6.5, y = 0.56, label = "virginica")
+  annotate("text", x = 5.8, y = 0.8, label = "versicolor") +
+  annotate("text", x = 6.5, y = 0.8, label = "virginica")
 ```
 
 
 ## 棒グラフ
 
-`geom_bar`
+**`geom_bar`**
 
 ```{r geom_bar, fig.width=5, fig.height=2.25, echo=TRUE}
 set.seed(1)
@@ -370,7 +370,7 @@ print(p)
 
 ## 関数をかさねる
 
-`stat_function`
+**`stat_function`**
 
 ```{r stat_function, fig.width=5, fig.height=2.75, echo=TRUE}
 p + stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
@@ -381,11 +381,11 @@ p + stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
 
 統計的変換
 
-例:
+例) **`stat_count`**: データの頻度分布を計算する
+```{r stat_count, fig.width=5, fig.height=2.1, echo=TRUE}
+set.seed(1); x <- rpois(200, 2)
+ggplot(data.frame(x = x), aes(x)) + stat_count(geom = "bar")
 ```
-geom_bar(stat = "count")
-```
-データの頻度分布を計算して棒グラフで表示する。
 
 - たいていの`geom`には対応する`stat`関数がある。
 - `geom`ではなくて`stat`で描画レイヤーを追加することも可能。
@@ -440,7 +440,7 @@ raster_data[5000:5005, ]
 
 ## ラスター
 
-geom_raster
+**`geom_raster`**
 
 ```{r geom_raster, fig.width=5, fig.height=2.75, echo=TRUE}
 p <- ggplot(raster_data, aes(x, y))
@@ -449,7 +449,7 @@ p + geom_raster(aes(fill = z)) + coord_fixed()
 
 ## 等高線
 
-geom_contour
+**`geom_contour`**
 
 ```{r geom_contour, fig.width=5, fig.height=2.75, echo=TRUE}
 p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
