@@ -54,6 +54,9 @@ ggplot(data = iris,
 >- \LARGE\bfseries → 手作業に由来するまちがいがなくなる
 >- \LARGE\bfseries → Reproducible Research（の一部）
 
+>- この発表資料も、RStudioで一括処理
+- ソースはGitHub でバージョン管理・公開
+-  https://github.com/ito4303/esj65
 
 ## さっそくつかってみる
 
@@ -290,7 +293,7 @@ ggplot(data) + geom_line(aes(Year, Diameter, colour = No)) +
    guides(colour = guide_legend(ncol = 2))
 ```
 
-## `group`を指定
+## groupを指定
 
 ```{r geom_line5, fig.width=5, fig.height=2.75, echo=TRUE}
 ggplot(data) + geom_line(aes(Year, Diameter, group = No))
@@ -339,9 +342,8 @@ ggplot(iris) +
 **`geom_density`**
 
 ```{r geom_density, fig.width=5, fig.height=2.75, echo=TRUE}
-p <- ggplot(iris) +
-  geom_density(aes(Sepal.Length, fill = Species), alpha = 0.5)
-print(p)
+p <- ggplot(iris, aes(Sepal.Length, fill = Species))
+p + geom_density(alpha = 0.5)
 ```
 
 ## テキストをはりこむ
@@ -349,7 +351,7 @@ print(p)
 **`annotate`**
 
 ```{r annotate, fig.width=5, fig.height=2.75, echo=TRUE}
-p + theme(legend.position = "none") +
+p + geom_density(alpha = 0.5, show.legend = FALSE) +
   annotate("text", x = 5, y = 0.6, label = "setosa") +
   annotate("text", x = 5.8, y = 0.8, label = "versicolor") +
   annotate("text", x = 6.5, y = 0.8, label = "virginica")
@@ -464,7 +466,13 @@ p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
     - https://kazutan.github.io/kazutanR/ggplot2_links.html
 - ggplot2 — きれいなグラフを簡単に合理的に（岩嵜航さん）
     - https://heavywatal.github.io/rstats/ggplot2.html
+- グラフ描画ggplot2の辞書的まとめ20のコード（MrUnadonさん）
+    - https://mrunadon.github.io/ggplot2/
+
+<!--
 - Cookbook for R » Graphs (Winston Changさん)
     - http://www.cookbook-r.com/Graphs/
-
+- Stack Overflowでのggplot2関連の質問
+    - https://stackoverflow.com/search?q=ggplot2
+-->
   
