@@ -158,8 +158,7 @@ p2 + xlim(4, 8) + ylim(1, 5)
 ## 対数軸にする
 
 ```{r axes_log, fig.width=5, fig.height=3, echo=TRUE}
-p2 +
-  scale_x_log10(limits = c(2, 8), breaks = c(2, 4, 8)) +
+p2 + scale_x_log10(limits = c(2, 8), breaks = c(2, 4, 8)) +
   scale_y_log10(limits = c(2, 8), breaks = c(2, 4, 8))
 ```
 
@@ -168,7 +167,7 @@ p2 +
 種ごとに分割して表示
 
 ```{r facet, fig.width=5, fig.height=2.5, echo=TRUE}
-p2 + facet_wrap(~ Species)
+p2 + facet_wrap(~ Species) + theme(legend.position = "none")
 ```
 
 
@@ -394,13 +393,13 @@ ggplot(data.frame(x = x), aes(x)) + stat_count(geom = "bar")
 
 ```{r Nile_data, include=FALSE}
 data(Nile)
-data1 <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
-                    Level = c(Nile))
+data <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
+                   Level = c(Nile))
 library(dlm)
 mod <- dlmModPoly(order = 1, dV = 100, dW = 10)
 nile_filter <- dlmFilter(Nile, mod)
-data2 <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
-                    Filtered = dropFirst(nile_filter$m)) %>%
+kf <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
+                 Filtered = dropFirst(nile_filter$m)) %>%
   mutate(sd = dlmSvd2var(nile_filter$U.C, nile_filter$D.C) %>%
            unlist() %>%
            dropFirst()) %>%
@@ -411,7 +410,7 @@ data2 <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
 ナイル川の水位
 
 ```{r data21, fig.width=5, fig.height=2.25, echo=TRUE}
-p1 <- ggplot(data1) + geom_line(aes(Year, Level))
+p1 <- ggplot(data) + geom_line(aes(Year, Level))
 print(p1)
 ```
 
@@ -420,23 +419,22 @@ print(p1)
 カルマンフィルタを通した値（赤線）と95%信頼区間(灰色の領域)を重ねる。
 
 ```{r geom_ribbon, fig.width=5, fig.height=2.25, echo=TRUE}
-p1 + geom_line(data = data2, aes(Year, Filtered),
+p1 + geom_line(data = kf, aes(Year, Filtered),
                colour = "red") +
-  geom_ribbon(data = data2,
+  geom_ribbon(data = kf,
               aes(Year, ymin = Lower, ymax = Upper),
               alpha = 0.5)
 ```
 
 ## XYZのデータ
 
-島谷(2017) 5.3節より
-
 ```{r raster_data, echo=TRUE}
 r <- function(x, y) (-0.00002 * (x - 40)^2 + 0.05) * 0.04 * y
 raster_data <- expand.grid(x = 0:100, y = 0:100) %>%
   mutate(z = r(x, y))
-raster_data[5000:5005, ]
+print(raster_data[5000:5005, ])
 ```
+\footnotesize 島谷(2017) 5.3節より
 
 ## ラスター
 
