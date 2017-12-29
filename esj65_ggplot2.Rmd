@@ -19,7 +19,7 @@ library(dplyr)
 
 ## このごろよくみるこのようなグラフ
 
-```{r introduction, fig.width=5, fig.height=3, echo=FALSE}
+```{r introduction,fig.width=4.5,fig.height=3,out.height="7cm",echo=FALSE}
 ggplot(data = iris,
        mapping = aes(x = Sepal.Length, y = Sepal.Width,
                      colour = Species)) +
@@ -64,7 +64,8 @@ ggplot(data = iris,
 
 \footnotesize データ: Itô (2017) Biodiversity Data Journal 5: e11732.
 https://doi.org/10.3897/BDJ.5.e11732
-(ODC-BY https://opendatacommons.org/licenses/by/1-0/)
+https://doi.org/10.5061/dryad.7f399
+(CC0 https://creativecommons.org/publicdomain/zero/1.0/)
 
 ```{r read_data, include=FALSE}
 # 銀閣寺山国有林の毎木調査
@@ -86,7 +87,7 @@ head(g_data)
 
 `ggplot`オブジェクトを生成する。
 
-```{r ggplot_func,fig.width=5,fig.height=3,echo=TRUE}
+```{r ggplot_func,fig.width=5.5,fig.height=3,out.height="6cm",echo=TRUE}
 p <- ggplot(data = g_data)
 print(p)
 ```
@@ -99,19 +100,19 @@ print(p)
 
 **`aes`** 関数: 変数とグラフ要素とのaesthetic mapping
 
-```{r geom_func, fig.width=5,fig.height=2.5,echo=TRUE}
+```{r geom_func, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y))
 ```
 
 ## 樹種ごとに色をかえる
 
-```{r colour, fig.width=5,fig.height=3,echo=TRUE}
+```{r colour, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y, colour = Species))
 ```
 
 ## こうしてもおなじ
 
-```{r colour2, fig.width=5,fig.height=3,echo=TRUE}
+```{r colour2, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(data = g_data,
        mapping = aes(x = X, y = Y, colour = Species)) +
   geom_point()
@@ -121,7 +122,7 @@ ggplot(data = g_data,
 
 `aes`の外で`colour`を指定すると、すべての点に適用される。
 
-```{r colour3, fig.width=5,fig.height=3,echo=TRUE}
+```{r colour3, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
 ```
 
@@ -129,7 +130,7 @@ p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
 
 Y軸は実は下むきなので、軸を反転させる。また、X軸とY軸の長さをそろえる。
 
-```{r coord, fig.width=5,fig.height=2.1,echo=TRUE}
+```{r coord, fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p2 <- ggplot(g_data) + xlim(0, 50) +
   scale_y_reverse(limits = c(50, 0)) + coord_equal()
 p2 + geom_point(mapping = aes(x = X, y = Y, colour = Species))
@@ -137,14 +138,14 @@ p2 + geom_point(mapping = aes(x = X, y = Y, colour = Species))
 
 ## 種類ごとに点の形をかえる
 
-```{r point_shape,fig.width=5,fig.height=2.1,echo=TRUE}
+```{r point_shape,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p2 + geom_point(aes(x = X, y = Y,
                     colour = Species, shape = Species))
 ```
 
 ## 点を大きくする
 
-```{r point_size,fig.width=5,fig.height=2.1,echo=TRUE}
+```{r point_size,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p2 + geom_point(aes(x = X, y = Y,
                     colour = Species, shape = Species),
                 size = 4, alpha = 0.7)
@@ -153,7 +154,7 @@ p2 + geom_point(aes(x = X, y = Y,
 
 ## DBHに応じて点の大きさを変える
 
-```{r point_size2,fig.width=5,fig.height=2.1,echo=TRUE}
+```{r point_size2,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p3 <- p2 + geom_point(aes(x = X, y = Y, 
                  colour = Species,  shape = Species, size = DBH),
                  alpha = 0.7)
@@ -163,7 +164,7 @@ print(p3)
 
 ## 色を指定する
 
-```{r spec_colour,fig.width=5,fig.height=2.1,echo=TRUE}
+```{r spec_colour,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p3 + scale_colour_manual(values = c("red", "#3355FF"))
 ```
 
@@ -182,7 +183,7 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
 ```
 
 ## 漢字をつかう
-```{r Japanese_font2,dev="cairo_pdf",fig.width=5,fig.height=3,echo=FALSE}
+```{r Japanese_font2,dev="cairo_pdf",fig.width=5,fig.height=3,out.height="7cm",echo=FALSE}
 print(p4)
 ```
 
@@ -190,21 +191,21 @@ print(p4)
 
 種ごとに分割して表示
 
-```{r facet,dev="cairo_pdf",fig.width=5,fig.height=2.2,echo=TRUE}
+```{r facet,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p4 + facet_wrap(~ Species) + theme(legend.position = "none")
 ```
 
 
 ## themeをかえる
 
-```{r theme_bw,dev="cairo_pdf",fig.width=5,fig.height=2.5, echo=TRUE}
-p4 + theme_bw(base_family = "IPAexGothic", base_size = 10)
+```{r theme_bw,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="6.5cm",echo=TRUE}
+p4 + theme_bw(base_family = "IPAexGothic")
 ```
 
 ## themeをかえる
 
-```{r theme_classic,dev="cairo_pdf",fig.width=5,fig.height=2.5, echo=TRUE}
-p4 + theme_classic(base_family = "IPAexGothic", base_size = 10)
+```{r theme_classic,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="6.5cm",echo=TRUE}
+p4 + theme_classic(base_family = "IPAexGothic")
 ```
 
 
@@ -238,14 +239,14 @@ for (t in 2:20)
 
 `x`はランダムウォークのベクトル
 
-```{r geom_line1, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_line1,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p <- ggplot(data.frame(t = seq_along(x), x = x), aes(t, x))
 p + geom_line()
 ```
 
 ## 折れ線グラフ+点
 
-```{r geom_line2, fig.width=5, fig.height=2.75, echo = TRUE}
+```{r geom_line2,fig.width=5,fig.height=3,out.height="5.5cm",echo = TRUE}
 p + geom_line(linetype = 2) + geom_point(size = 3)
 ```
 
@@ -271,20 +272,20 @@ head(q_data)
 
 ## geom_lineで表示
 
-```{r geom_line3, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_line3,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(q_data) + geom_line(aes(Year, Diameter))
 ```
 
 ## colourを指定
 
-```{r geom_line4, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_line4,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(q_data) + geom_line(aes(Year, Diameter, colour = No)) +
    guides(colour = guide_legend(ncol = 2))
 ```
 
 ## groupを指定
 
-```{r geom_line5, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_line5,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 ```
 
@@ -295,7 +296,7 @@ ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 
 **`geom_boxplot`**
 
-```{r boxplot, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r boxplot,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width))
 ```
 
@@ -303,7 +304,7 @@ ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width))
 
 **`coor_flip`**
 
-```{r boxplot2, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r boxplot2,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width)) +
   coord_flip()
 ```
@@ -312,7 +313,7 @@ ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width)) +
 
 **`geom_histogram`**
 
-```{r histogram, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r histogram,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(iris) +
   geom_histogram(aes(Sepal.Length, fill = Species),
                  binwidth = 0.5)
@@ -322,7 +323,7 @@ ggplot(iris) +
 
 `position = "dodge"`: 積み重ねずに ずらす
 
-```{r histogram2, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r histogram2,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(iris) +
   geom_histogram(aes(Sepal.Length, fill = Species),
                  binwidth = 0.5, position = "dodge")
@@ -332,7 +333,7 @@ ggplot(iris) +
 
 **`geom_density`**
 
-```{r geom_density, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_density,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p <- ggplot(iris, aes(Sepal.Length, fill = Species))
 p + geom_density(alpha = 0.5)
 ```
@@ -341,7 +342,7 @@ p + geom_density(alpha = 0.5)
 
 **`annotate`**
 
-```{r annotate, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r annotate,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_density(alpha = 0.5, show.legend = FALSE) +
   annotate("text", x = 5, y = 0.6, label = "setosa") +
   annotate("text", x = 5.8, y = 0.8, label = "versicolor") +
@@ -353,7 +354,7 @@ p + geom_density(alpha = 0.5, show.legend = FALSE) +
 
 **`geom_bar`**
 
-```{r geom_bar, fig.width=5, fig.height=2.25, echo=TRUE}
+```{r geom_bar,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 set.seed(1)
 h <- hist(rnorm(400, 0, 1), plot = FALSE)
 p <- ggplot(data.frame(x = h$mids, y = h$density), aes(x, y)) +
@@ -365,7 +366,7 @@ print(p)
 
 **`stat_function`**
 
-```{r stat_function, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r stat_function,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
                   geom = "line") 
 ```
@@ -373,7 +374,7 @@ p + stat_function(fun = dnorm, args = list(mean = 0, sd = 1),
 ## stat_*関数
 
 統計的変換, 例) **`stat_count`**: データの頻度分布を計算する。
-```{r stat_count, fig.width=5, fig.height=2, echo=TRUE}
+```{r stat_count,fig.width=5,fig.height=3,out.height="5cm",echo=TRUE}
 set.seed(1); x <- rpois(200, 2)
 ggplot(data.frame(x = x), aes(x)) + stat_count(geom = "bar")
 ```
@@ -401,7 +402,7 @@ kf <- data.frame(Year = start(Nile)[1]:end(Nile)[1],
 
 ナイル川の水位 `data(Nile)`
 
-```{r data21, fig.width=5, fig.height=2.25, echo=TRUE}
+```{r data21,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p1 <- ggplot(data) + geom_line(aes(Year, Level))
 print(p1)
 ```
@@ -410,7 +411,7 @@ print(p1)
 
 カルマンフィルタを通した値（赤線）と95%信頼区間(灰色の領域)を重ねる。
 
-```{r geom_ribbon, fig.width=5, fig.height=2.25, echo=TRUE}
+```{r geom_ribbon,fig.width=5,fig.height=3,out.height="4.5cm",echo=TRUE}
 p1 + geom_line(data = kf, aes(Year, Filtered),
                colour = "red") +
   geom_ribbon(data = kf,
@@ -420,7 +421,7 @@ p1 + geom_line(data = kf, aes(Year, Filtered),
 
 ## XYZのデータ
 
-```{r raster_data, echo=TRUE}
+```{r raster_data,echo=TRUE}
 r <- function(x, y) (-0.00002 * (x - 40)^2 + 0.05) * 0.04 * y
 raster_data <- expand.grid(x = 0:100, y = 0:100) %>%
   mutate(z = r(x, y))
@@ -432,7 +433,7 @@ print(raster_data[5000:5005, ])
 
 **`geom_raster`**
 
-```{r geom_raster, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_raster,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p <- ggplot(raster_data, aes(x, y))
 p + geom_raster(aes(fill = z)) + coord_fixed()
 ```
@@ -441,7 +442,7 @@ p + geom_raster(aes(fill = z)) + coord_fixed()
 
 **`geom_contour`**
 
-```{r geom_contour, fig.width=5, fig.height=2.75, echo=TRUE}
+```{r geom_contour,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
 ```
 

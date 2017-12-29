@@ -4,10 +4,11 @@
 「ggplot2をつかってみる」
 
 データファイル`Stem_data.csv'および`Measurement_data.csv'はItô (2017)の者を使用しています。
-このデータは、ODC-BY https://opendatacommons.org/licenses/by/1-0/ のもとに利用可能です。
+このデータは、CC0 https://creativecommons.org/publicdomain/zero/1.0/ のもとに利用可能です。
 
 Itô H (2017) Time series data of a broadleaved secondary forest in Japan as affected by deer and mass mortality of oak trees. Biodiversity Data Journal 5: e11732.
 https://doi.org/10.3897/BDJ.5.e11732
+https://doi.org/10.5061/dryad.7f399
 
 データファイル`Tree_ring_data.csv'はItô and Sumida (2017)のものを使用しています。
 このデータは、CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/legalcode のもとに利用可能です。
