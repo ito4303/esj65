@@ -3,10 +3,16 @@
 
 「ggplot2をつかってみる」
 
-データファイル'Tree_ring_data.csv'はItô and Sumida (2017)のものを使用しています。
+データファイル`Stem_data.csv'および`Measurement_data.csv'はItô (2017)の者を使用しています。
+このデータは、ODC-BY https://opendatacommons.org/licenses/by/1-0/ のもとに利用可能です。
+
+Itô H (2017) Time series data of a broadleaved secondary forest in Japan as affected by deer and mass mortality of oak trees. Biodiversity Data Journal 5: e11732.
+https://doi.org/10.3897/BDJ.5.e11732
+
+データファイル`Tree_ring_data.csv'はItô and Sumida (2017)のものを使用しています。
 このデータは、CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/legalcode のもとに利用可能です。
 
-Itô and Sumida (2017) Allometric and growth data of an evergreen oak, 
-_Quercus glauca_, in a secondary broadleaved forest. Ecol. Res 32:105-105
-doi:10.1007/s11284-016-1424-1
+Itô H and Sumida A (2017) Allometric and growth data of an evergreen oak, 
+_Quercus glauca_, in a secondary broadleaved forest. Ecological Research 32:105-105.
+https://doi.org/10.1007/s11284-016-1424-1
 http://db.cger.nies.go.jp/JaLTER/ER_DataPapers/archives/2016/ERDP-2016-08/metadata
