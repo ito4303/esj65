@@ -7,7 +7,7 @@
 
 ---
 
-データファイル`Stem_data.csv`および`Measurement_data.csv`はItô (2017)の者を使用しています。
+データファイル`Stem_data.csv`および`Measurement_data.csv`はItô (2017)のものを使用しています。
 このデータは、CC0 https://creativecommons.org/publicdomain/zero/1.0/ のもとに利用可能です。
 
 Itô H (2017) Time series data of a broadleaved secondary forest in Japan as affected by deer and mass mortality of oak trees. Biodiversity Data Journal 5: e11732.
