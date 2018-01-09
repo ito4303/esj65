@@ -41,12 +41,25 @@ ggplot(data = iris,
 - \Large 関連パッケージもどんどんできている
     - GGally, ggmcmc, ggmap, ggthemes,\dots
 
-## ここでの目的1
+## ggplot2
+
+- 開発者: Hadley Wickham & Winston Chang
+
+- ウェブサイト: http://ggplot2.tidyverse.org/
+
+- 開発履歴 (https://github.com/tidyverse/ggplot2/releases より)
+    - 2015-01-10 ver. 1.0.0
+    - 2015-12-19 ver. 2.0.0
+    - 2016-03-02 ver. 2.1.0
+    - 2016-11-15 ver. 2.2.0
+    - 2016-12-31 ver. 2.2.1
+
+## ここでの目的(1)
 
 >- \Large 得られたデータを可視化する
 >- \Large → データにあった解析
 
-## ここでの目的2
+## ここでの目的(2)
 
 >- \Large グラフ作成に（だけではなく）、手作業（コピー&ペースト）をなくす
 >- \Large R（と、RStudioなど）で自動化する
@@ -60,7 +73,7 @@ ggplot(data = iris,
 
 ## さっそくつかってみる
 
-樹木の空間分布データ
+アラカシとクロバイの空間分布・胸高直径データ
 
 \footnotesize データ: Itô (2017) Biodiversity Data Journal 5: e11732.
 https://doi.org/10.3897/BDJ.5.e11732
@@ -132,7 +145,7 @@ Y軸は実は下むきなので、軸を反転させる。また、X軸とY軸�
 
 ```{r coord, fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p2 <- ggplot(g_data) + xlim(0, 50) +
-  scale_y_reverse(limits = c(50, 0)) + coord_equal()
+  scale_y_reverse(limits = c(50, 0)) + coord_fixed(ratio = 1)
 p2 + geom_point(mapping = aes(x = X, y = Y, colour = Species))
 ```
 
@@ -151,16 +164,15 @@ p2 + geom_point(aes(x = X, y = Y,
                 size = 4, alpha = 0.7)
 ```
 
-
 ## DBHに応じて点の大きさを変える
 
 ```{r point_size2,fig.width=5,fig.height=3,out.height="5.5cm",echo=TRUE}
-p3 <- p2 + geom_point(aes(x = X, y = Y, 
-                 colour = Species,  shape = Species, size = DBH),
-                 alpha = 0.7)
+p3 <- p2 +
+  geom_point(aes(x = X, y = Y, 
+                 colour = Species, shape = Species, size = DBH),
+             alpha = 0.7)
 print(p3)
 ```
-
 
 ## 色を指定する
 
@@ -168,7 +180,7 @@ print(p3)
 p3 + scale_colour_manual(values = c("red", "#3355FF"))
 ```
 
-## 漢字をつかう
+## 漢字をつかう(1)
 
 IPAexフォントをインストールしておく（利用可能なフォントであればそれを指定してもよい）
 
@@ -182,7 +194,8 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
     theme_grey(base_family = "IPAexGothic", base_size = 10)
 ```
 
-## 漢字をつかう
+## 漢字をつかう(2)
+
 ```{r Japanese_font2,dev="cairo_pdf",fig.width=5,fig.height=3,out.height="7cm",echo=FALSE}
 print(p4)
 ```
@@ -196,13 +209,13 @@ p4 + facet_wrap(~ Species) + theme(legend.position = "none")
 ```
 
 
-## themeをかえる
+## themeをかえる(1)
 
 ```{r theme_bw,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="6.5cm",echo=TRUE}
 p4 + theme_bw(base_family = "IPAexGothic")
 ```
 
-## themeをかえる
+## themeをかえる(2)
 
 ```{r theme_classic,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="6.5cm",echo=TRUE}
 p4 + theme_classic(base_family = "IPAexGothic")
@@ -217,6 +230,7 @@ p4 + theme_classic(base_family = "IPAexGothic")
 - **`geom_boxplot`**
 - **`geom_contour`**
 - **`geom_density`**
+- **`geom_errorbar`**
 - **`geom_histogram`**
 - **`geom_line`**
 - **`geom_polygon`**
@@ -225,7 +239,7 @@ p4 + theme_classic(base_family = "IPAexGothic")
 
 などなど
 
-## 折れ線グラフ
+## 折れ線グラフ(1)
 
 アラカシの年輪データ
 \footnotesize Itô and Sumida (2017) Ecol. Res 32:105-105.
@@ -247,7 +261,7 @@ q_data <- read_csv("Tree_ring_data.csv") %>%
 head(q_data)
 ```
 
-## 折れ線グラフ
+## 折れ線グラフ(2)
 
 **`geom_line`**
 
@@ -285,7 +299,7 @@ ggplot(q_data) + geom_line(aes(Year, Diameter, colour = No)) +
 ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 ```
 
-## 別のデータを重ねる
+## 別のデータを重ねる(1)
 
 ```{r dlm,include=FALSE}
 q_data.21 <- filter(q_data, No == 21)
@@ -316,7 +330,7 @@ p1 <- ggplot(g_data) + geom_line(aes(Year, Growth))
 print(p1)
 ```
 
-## 別のデータを重ねる
+## 別のデータを重ねる(2)
 
 カルマンフィルタを通した値と95%信頼区間を格納したデーターフレーム`kf`を
 使用して、フィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
@@ -338,7 +352,7 @@ p1 + geom_line(data = kf, aes(Year, Filtered), colour = "red") +
 ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width))
 ```
 
-## XY軸をいれかえる
+## X軸とY軸をいれかえる
 
 **`coor_flip`**
 
@@ -347,7 +361,7 @@ ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width)) +
   coord_flip()
 ```
 
-## ヒストグラム
+## ヒストグラム(1)
 
 **`geom_histogram`**
 
@@ -357,7 +371,7 @@ ggplot(iris) +
                  binwidth = 0.5)
 ```
 
-## ヒストグラム
+## ヒストグラム(2)
 
 `position = "dodge"`: 積み重ねずに ずらす
 
