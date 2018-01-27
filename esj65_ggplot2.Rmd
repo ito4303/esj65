@@ -43,11 +43,13 @@ ggplot(data = iris,
 
 ## ggplot2
 
-- \Large Grammer of Graphics
+- \LARGE ggplot2パッケージ
 
-- \Large 統一された文法でさまざまな種類のグラフをえがける。
+    - gg: Grammer of Graphics
 
-- \Large 関連パッケージもどんどんできている。
+- \large 統一された文法でさまざまな種類のグラフをえがける。
+
+- \large 関連パッケージもどんどんできている。
     - GGally, ggmcmc, ggmap, ggthemes,\dots
 
 ## ggplot2
