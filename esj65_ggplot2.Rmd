@@ -1,5 +1,6 @@
 ---
 title: "ggplot2をつかってみる"
+subtitle: "（第65回日本生態学会自由集会「データ解析で出会う統計的問題: R の新しい作図・作表」）"
 author: "伊東宏樹"
 date: "2018-03-14"
 institute: "森林総合研究所北海道支所"
@@ -65,20 +66,20 @@ ggplot(data = iris,
     - 2016-11-15 ver. 2.2.0
     - 2016-12-31 ver. 2.2.1
 
-## ここでの目的(1)
+## ここでの目的
 
 >- \Large 得られたデータを可視化する。
 >- \Large → データにあった解析
 
-## ここでの目的(2)
+## もうひとつの目的
 
->- \Large グラフ作成に（だけではなく）、手作業（コピー&ペースト）をなくす。
->- \Large R（と、RStudioなど）で自動化する。
+>- グラフ作成に，手作業（コピー&ペースト）をできるだけ減らす。できれば なくす。
+>- R（と，RStudioなど）で自動化する。
 
->- \LARGE\bfseries → 手作業に由来するまちがいがなくなる。
->- \LARGE\bfseries → Reproducible Research（の一部）
+>- \Large\bfseries → 手作業に由来するまちがいをなくす。
+>- \Large\bfseries → Reproducible Research（の一部）
 
->- この発表資料も、RStudioで一括処理
+>- この発表資料も，RStudioで一括処理
 
 ## さっそくつかってみる
 
@@ -124,7 +125,7 @@ print(p)
 
 **`aes`** 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
 
-\textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに+演算子で、図を追加する。}
+\textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに+演算子で，図を追加する。}
 
 ```{r geom_func, fig.width=5.5,fig.height=3,out.height="5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y))
@@ -148,7 +149,7 @@ ggplot(data = g_data,
 
 ## すべての点の色をかえる
 
-すべての点を同じにするには、`aes`の外で`colour`を指定する（`geom_*`関数の`colour`引数に指定する）。
+すべての点を同じにするには，`aes`の外で`colour`を指定する（`geom_*`関数の`colour`引数に指定する）。
 
 ```{r colour3, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
@@ -156,7 +157,7 @@ p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
 
 ## 座標系
 
-Y軸は実は下むきなので、軸を反転させる。また、X軸とY軸の長さをそろえる。
+Y軸は実は下むきなので，軸を反転させる。また，X軸とY軸の長さをそろえる。
 
 \textcolor{red}{\bfseries 軸の指定なども+演算子で追加する。}
 
@@ -199,7 +200,7 @@ print(p3)
 
 ## 色を指定する
 
-**`scale_colour_manual`**関数で、任意の色を指定できる。
+**`scale_colour_manual`**関数で，任意の色を指定できる。
 
 ```{r spec_colour,fig.width=5,fig.height=3,out.height="5cm",echo=TRUE}
 p3 + scale_colour_manual(values = c("red", "#3355FF"))
@@ -227,7 +228,7 @@ print(p4)
 
 ## Facet
 
-**`facet_wrap`**関数を使用して、種ごとに分割して表示（ほかに**`facet_grid`**関数）。
+**`facet_wrap`**関数を使用して，種ごとに分割して表示（ほかに**`facet_grid`**関数）。
 
 ```{r facet,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p4 + facet_wrap(~ Species) + theme(legend.position = "none")
@@ -251,10 +252,10 @@ p4 + theme_classic(base_family = "IPAexGothic")
 ## ここまでのまとめ
 
 - \large `ggplot`関数でオブジェクト生成。
-- \large `aes`関数で、データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
+- \large `aes`関数で，データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
 - \large `geom_*`関数で描画（レイヤー追加）。
-- \large テーマ、軸、Facetなどをそれぞれの関数で設定する。
-- \large パーツや設定を+演算子で追加していって、グラフを完成させる。
+- \large テーマ，軸，Facetなどをそれぞれの関数で設定する。
+- \large パーツや設定を+演算子で追加していって，グラフを完成させる。
 
 ## ほかの種類のグラフは
 
@@ -370,7 +371,7 @@ print(p1)
 ## 別のデータを重ねる(2)
 
 カルマンフィルタを通した値と95%信頼区間を格納したデータフレーム`kf`を
-使用して、フィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
+使用して，フィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
 表示する。
 
 ```{r geom_ribbon,fig.width=4.5,fig.height=3,out.height="4.5cm",echo=TRUE}
@@ -475,7 +476,7 @@ raster_data <- expand.grid(x = 0:100, y = 0:100) %>%
   mutate(z = r(x, y))
 print(raster_data[5000:5005, ])
 ```
-\footnotesize データを生成する関数は、島谷(2017) 5.3節より。
+\footnotesize データを生成する関数は，島谷(2017) 5.3節より。
 
 ## ラスター
 
@@ -509,7 +510,7 @@ p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
     - https://mrunadon.github.io/ggplot2/
 
 <!--
-- Cookbook for R » Graphs (Winston Changさん)
+- Cookbook for R » Graphs（Winston Changさん）
     - http://www.cookbook-r.com/Graphs/
 - Stack Overflowでのggplot2関連の質問
     - https://stackoverflow.com/search?q=ggplot2
