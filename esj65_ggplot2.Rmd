@@ -18,6 +18,8 @@ library(ggplot2)
 library(dplyr)
 ```
 
+# はじめに
+
 ## 今回の発表に使用したコード・データ
 
 https://github.com/ito4303/esj65 で公開
@@ -53,7 +55,7 @@ ggplot(data = iris,
 - \large 関連パッケージもどんどんできている。
     - GGally, ggmcmc, ggmap, ggthemes,\dots
 
-## ggplot2
+## 開発者など
 
 - 開発者: Hadley Wickham & Winston Chang
 
@@ -81,9 +83,11 @@ ggplot(data = iris,
 
 >- この発表資料も，RStudioで一括処理
 
-## さっそくつかってみる
+# ggplot2をつかってみる
 
-使用するデータ: アラカシとクロバイの空間分布・胸高直径データ
+## 使用するデータ
+
+アラカシとクロバイの空間分布・胸高直径データ
 
 \footnotesize データ: Itô (2017) Biodiversity Data Journal 5: e11732.
 https://doi.org/10.3897/BDJ.5.e11732
@@ -257,9 +261,10 @@ p4 + theme_classic(base_family = "IPAexGothic")
 - \large テーマ，軸，Facetなどをそれぞれの関数で設定する。
 - \large パーツや設定を+演算子で追加していって，グラフを完成させる。
 
-## ほかの種類のグラフは
 
-**`geom_*`** 関数
+# ほかの種類のグラフは
+
+## **`geom_*`** 関数
 
 - **`geom_bar`**
 - **`geom_boxplot`**
@@ -495,6 +500,7 @@ p + geom_raster(aes(fill = z)) + coord_fixed()
 p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
 ```
 
+# おわりに
 
 ## 参考リンク
 
@@ -509,7 +515,10 @@ p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
 - グラフ描画ggplot2の辞書的まとめ20のコード（MrUnadonさん）
     - https://mrunadon.github.io/ggplot2/
 
+
 <!--
+- ggplot2逆引（Hiroaki Yutaniさん）
+    - https://yutannihilation.github.io/ggplot2-gyakubiki/
 - Cookbook for R » Graphs（Winston Changさん）
     - http://www.cookbook-r.com/Graphs/
 - Stack Overflowでのggplot2関連の質問
