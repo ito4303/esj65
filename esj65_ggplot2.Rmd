@@ -375,14 +375,13 @@ print(p1)
 
 ## 別のデータを重ねる(2)
 
-カルマンフィルタを通した値と95%信頼区間を格納したデータフレーム`kf`を
-使用して，フィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
-表示する。
+カルマンフィルタでフィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
+表示する（それぞれの値はデータフレーム`kf`に格納しておいてある）。
 
 ```{r geom_ribbon,fig.width=4.5,fig.height=3,out.height="4.5cm",echo=TRUE}
 p1 + geom_line(data = kf, aes(Year, Filtered), colour = "red") +
   geom_ribbon(data = kf, aes(Year, ymin = Lower, ymax = Upper),
-              alpha = 0.5)
+              colour = "grey", alpha = 0.4)
 ```
 
 ## 平滑化
@@ -441,15 +440,16 @@ p <- ggplot(iris, aes(Sepal.Length, fill = Species))
 p + geom_density(alpha = 0.5)
 ```
 
-## テキストをはりこむ
+## 注釈をつける
 
 **`annotate`**関数
 
-```{r annotate,fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
+```{r annotate,fig.width=4.5,fig.height=3,out.height="5cm",echo=TRUE}
+x_pos <- c(5.0, 5.7, 6.5); y_pos <- c(0.6, 0.8, 0.8)
+labels <- c("setosa", "versicolor", "virginica")
 p + geom_density(alpha = 0.5, show.legend = FALSE) +
-  annotate("text", x = 5, y = 0.6, label = "setosa") +
-  annotate("text", x = 5.7, y = 0.8, label = "versicolor") +
-  annotate("text", x = 6.5, y = 0.8, label = "virginica")
+  annotate("text", x = x_pos, y = y_pos, label = labels,
+           family = "Helvetica")
 ```
 
 ## 棒グラフ
@@ -459,14 +459,14 @@ p + geom_density(alpha = 0.5, show.legend = FALSE) +
 ```{r geom_bar,fig.width=4.5,fig.height=3,out.height="5.25cm",echo=TRUE}
 set.seed(1); x <- rpois(200, 2)
 p <- ggplot(data.frame(x = x), aes(x))
-p + geom_bar(fill = "gray50")
+p + geom_bar(fill = "grey50")
 ```
 
 ## stat_*関数
 
 統計的変換, 例) **`stat_count`**: データの頻度分布を計算する。
 ```{r stat_count,fig.width=4.5,fig.height=3,out.height="5cm",echo=TRUE}
-p + stat_count(geom = "bar", fill = "gray50")
+p + stat_count(geom = "bar", fill = "grey50")
 ```
 
 - たいていの`geom`には対応する`stat`関数がある。
