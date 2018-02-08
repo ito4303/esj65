@@ -71,6 +71,7 @@ ggplot(data = iris,
 ## ここでの目的
 
 >- \Large 得られたデータを可視化する。
+
 >- \Large → データにあった解析
 
 ## たとえば
@@ -156,7 +157,7 @@ print(p)
 
 **`aes`** 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
 
-\textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに+演算子で，図を追加する。}
+\textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに`+'演算子で，レイヤーを追加する。}
 
 ```{r geom_func, fig.width=5.5,fig.height=3,out.height="5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y))
@@ -190,7 +191,7 @@ p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
 
 Y軸は実は下むきなので，軸を反転させる。また，X軸とY軸の長さをそろえる。
 
-\textcolor{red}{\bfseries 軸の指定なども+演算子で追加する。}
+\textcolor{red}{\bfseries 軸の指定なども`+'演算子で追加する。}
 
 ```{r coord, fig.width=5,fig.height=3,out.height="5cm",echo=TRUE}
 p2 <- ggplot(g_data) + xlim(0, 50) +
