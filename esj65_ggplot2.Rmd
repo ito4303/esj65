@@ -84,21 +84,21 @@ x2 <- rnorm(length(x1), mean(x1), sd(x1))
 y2 <- rnorm(length(x1), mean(y1), sd(y1))
 df <- data.frame(X = c(x1, x2), Y = c(y1, y2),
                  Type = rep(c("1", "2"), each = length(x1)))
-corr_coef <- c(sprintf("%4.3f", cor(x1, y1)^2),
-               sprintf("%4.3f", cor(x2, y2)^2))
+corr_coef <- c(sprintf("%4.3f", cor(x1, y1)),
+               sprintf("%4.3f", cor(x2, y2)))
 text <- data.frame(X = c(0.5, 0.7), Y = c(0.1, 0.1),
                    Type = c("1", "2"),
-                   labels = c(paste0("italic(r)^2==\"", corr_coef[1], "\""),
-                              paste0("italic(r)^2==\"", corr_coef[2], "\"")))
+                   labels = c(paste0("italic(r)==\"", corr_coef[1], "\""),
+                              paste0("italic(r)==\"", corr_coef[2], "\"")))
 ggplot(df) +
   geom_point(aes(X, Y), size = 1, alpha = 0.8) +
-  geom_text(data = text, aes(X, Y, label = labels), parse = TRUE) +
+  geom_text(data = text, mapping = aes(X, Y, label = labels), parse = TRUE) +
   ylim(0, 1.5) +
   coord_fixed() +
   facet_wrap(~ Type)
 ```
 
-どちらも$r^2$は0だが
+どちらも$r$は0だが
 
 
 ## もうひとつの目的
@@ -257,6 +257,17 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
 ```{r Japanese_font2,dev="cairo_pdf",fig.width=5,fig.height=3,out.height="7cm",echo=FALSE}
 print(p4)
 ```
+
+## 図をファイルに保存する
+
+**`ggsave`**関数などをつかう。日本語フォント使用時にPDF出力するには`device = cairo_pdf`とする。macOSでは**`quartz.save`**関数でも。
+
+```{r cairo_pdf,echo=TRUE}
+ggsave("p4.pdf", plot = p4, device = cairo_pdf,
+       width = 12, height = 8, units = "cm")
+```
+
+\includegraphics[width=7cm]{p4.pdf}
 
 ## Facet
 
