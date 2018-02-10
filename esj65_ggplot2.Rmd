@@ -240,7 +240,9 @@ p3 + scale_colour_manual(values = c("red", "#3355FF"))
 
 ## 漢字をつかう(1)
 
-**``theme_grey``**関数の`base_family`引数にIPAexフォントを指定した（利用可能なフォントであればそれを指定してもよい）。
+ここではIPAexゴシックフォントを使用した。Windowsでは**`windowsFonts`**の設定が必要。
+
+文字コードはUTF-8にしておくとよい（ただし、日本語版WindowsのRでは文字化けするかも）。
 
 ```{r Japanese_font,echo=TRUE}
 p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
@@ -249,7 +251,7 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
   scale_shape_discrete(name = "種",
                        labels = c("アラカシ", "クロバイ")) +
   scale_size_continuous(name = "胸高直径 (cm)") +
-  theme_grey(base_family = "IPAexGothic", base_size = 10)
+  theme(text = element_text(family = "IPAexGothic", size = 10))
 ```
 
 ## 漢字をつかう(2)
@@ -260,7 +262,7 @@ print(p4)
 
 ## 図をファイルに保存する
 
-**`ggsave`**関数などをつかう。日本語フォント使用時にPDF出力するには`device = cairo_pdf`とする。macOSでは**`quartz.save`**関数でも。
+**`ggsave`**関数などをつかう。日本語フォント使用時にPDF出力するには`device = cairo_pdf`とする。macOSでは**`quartz.save`**関数も使用可。
 
 ```{r cairo_pdf,echo=TRUE}
 ggsave("p4.pdf", plot = p4, device = cairo_pdf,
