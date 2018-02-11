@@ -281,8 +281,10 @@ ggsave("p4.pdf", plot = p4, device = cairo_pdf,
 macOSでは**`quartz.save`**関数も使用可。
 
 ```{r quartz_save,echo=TRUE,results='hide',message=FALSE}
-quartz.save("p4_quartz.pdf", type = "pdf",
-            width = 12 / 2.54, height = 8 / 2.54)
+if (Sys.info()["sysname"] == "Darwin") {
+  quartz.save("p4_quartz.pdf", type = "pdf",
+              width = 12 / 2.54, height = 8 / 2.54)
+}
 ```
 
 <!--
