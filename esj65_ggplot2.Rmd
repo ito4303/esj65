@@ -238,11 +238,9 @@ print(p3)
 p3 + scale_colour_manual(values = c("red", "#3355FF"))
 ```
 
-## 漢字をつかう(1)
+## 漢字をつかう
 
-ここではIPAexゴシックフォントを使用した。Windowsでは**`windowsFonts`**の設定が必要。
-
-文字コードはUTF-8にしておくとよい（ただし、日本語版WindowsのRでは文字化けするかも）。
+ここではIPAexゴシックフォントを使用した。
 
 <!--
 NotoSansCJKjp-Regular を使用するとき
@@ -259,7 +257,12 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
   theme(text = element_text(family = "IPAexGothic", size = 10))
 ```
 
-## 漢字をつかう(2)
+文字コードはUTF-8にしておくとよい（ただし、日本語版WindowsのRでは文字化けするかも）。
+
+Windowsでは**`windowsFonts`**関数でフォントの設定をしておくか、**extrafont**パッケージを使用して、必要な設定をしておく。
+
+
+## 漢字をつかった表示
 
 ```{r Japanese_font2,dev="cairo_pdf",fig.width=5,fig.height=3,out.height="7cm",echo=FALSE}
 print(p4)
@@ -271,12 +274,12 @@ print(p4)
 
 日本語フォントを埋め込んだPDFを出力するには`device = cairo_pdf`とする（macOSではXQuartzのインストールが必要になるかもしれない）。
 
-手もとのWindows環境ではPDFへの任意フォント埋め込みはうまくいっていない。
-
 ```{r cairo_pdf,echo=TRUE}
 ggsave("p4.pdf", plot = p4, device = cairo_pdf,
        width = 12, height = 8, units = "cm")
 ```
+
+Windows環境では、**extrafont**パッケージを利用すると、TrueTypeフォントのPDF埋め込みができるようだ。
 
 macOSでは**`quartz.save`**関数も使用可。
 
@@ -293,12 +296,13 @@ if (Sys.info()["sysname"] == "Darwin") {
 
 ## Facet
 
-**`facet_wrap`**関数を使用して，種ごとに分割して表示（ほかに**`facet_grid`**関数）。
+**`facet_wrap`**関数を使用して，種ごとに分割して表示。
 
 ```{r facet,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p4 + facet_wrap(~ Species) + theme(legend.position = "none")
 ```
 
+ほかに**`facet_grid`**関数も。
 
 ## themeをかえる(1)
 
@@ -320,7 +324,7 @@ p4 + theme_classic(base_family = "IPAexGothic")
 - \large `aes`関数で，データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
 - \large `geom_*`関数で描画（レイヤー追加）。
 - \large テーマ，軸，Facetなどをそれぞれの関数で設定する。
-- \large パーツや設定を+演算子で追加していって，グラフを完成させる。
+- \large パーツや設定を`+'演算子で追加していって，グラフを完成させる。
 
 
 # ほかの種類のグラフは

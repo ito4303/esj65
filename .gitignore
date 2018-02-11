@@ -35,7 +35,7 @@ vignettes/*.pdf
 *_files/
 
 .DS_Store
-esj65_ggplot2.pdf
+*.pdf
 esj65_ggplot2.tex
-p4.pdf
+
 
