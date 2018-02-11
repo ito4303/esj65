@@ -244,6 +244,11 @@ p3 + scale_colour_manual(values = c("red", "#3355FF"))
 
 文字コードはUTF-8にしておくとよい（ただし、日本語版WindowsのRでは文字化けするかも）。
 
+<!--
+NotoSansCJKjp-Regular を使用するとき
+theme(text = element_text(family = "NotoSansCJKjp-Regular", size = 10))
+-->
+
 ```{r Japanese_font,echo=TRUE}
 p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
   scale_colour_discrete(name = "種",
@@ -262,14 +267,27 @@ print(p4)
 
 ## 図をファイルに保存する
 
-**`ggsave`**関数などをつかう。日本語フォント使用時にPDF出力するには`device = cairo_pdf`とする。macOSでは**`quartz.save`**関数も使用可。
+**`ggsave`**関数などをつかう。
+
+日本語フォントを埋め込んだPDFを出力するには`device = cairo_pdf`とする（macOSではXQuartzのインストールが必要になるかもしれない）。
+
+手もとのWindows環境ではPDFへの任意フォント埋め込みはうまくいっていない。
 
 ```{r cairo_pdf,echo=TRUE}
 ggsave("p4.pdf", plot = p4, device = cairo_pdf,
        width = 12, height = 8, units = "cm")
 ```
 
-\includegraphics[width=7cm]{p4.pdf}
+macOSでは**`quartz.save`**関数も使用可。
+
+```{r quartz_save,echo=TRUE,results='hide',message=FALSE}
+quartz.save("p4_quartz.pdf", type = "pdf",
+            width = 12 / 2.54, height = 8 / 2.54)
+```
+
+<!--
+\includegraphics[width=6cm]{p4.pdf}
+-->
 
 ## Facet
 
