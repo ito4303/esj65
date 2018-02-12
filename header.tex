@@ -5,10 +5,15 @@
 }
 
 %% Fonts
-\usepackage{fontspec}
-\setmainfont[Scale=1.0]{TeXGyreHeros}
-\setsansfont[Scale=1.0]{TeXGyreHeros}
-\setmonofont{NotoSansMonoCJKjp}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[scale=1.0]{tgheros}
+%\usepackage[scale=0.95]{zi4}
+\usepackage[scaled]{beramono}
+%\usepackage{fontspec}
+%\setmainfont[Scale=1.0]{TeXGyreHeros}
+%\setsansfont[Scale=1.0]{TeXGyreHeros}
+%\setmonofont{NotoSansMonoCJKjp}
 
 %% Japanese font
 \usepackage{luatexja-otf}
@@ -19,7 +24,7 @@
 %% change fontsize of R code
 \let\oldShaded\Shaded
 \let\endoldShaded\endShaded
-\renewenvironment{Shaded}{\small\oldShaded}{\endoldShaded}
+\renewenvironment{Shaded}{\footnotesize\oldShaded}{\endoldShaded}
 
 %% change fontsize of output
 \let\oldverbatim\verbatim
