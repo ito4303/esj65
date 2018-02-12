@@ -41,7 +41,7 @@ ggplot(data = iris,
                       guide = guide_legend(label.hjust = 0)) +
   labs(x = "Sepal length (cm)", y = "Sepal width (cm)") +
   theme_grey(base_family = "Helvetica", base_size = 12) +
-  theme(legend.text = element_text(face = "italic", size = 12))
+  theme(legend.text = element_text(family = "Helvetica", face = "italic", size = 12))
 ```
 
 ## ggplot2
@@ -88,8 +88,8 @@ corr_coef <- c(sprintf("%4.3f", cor(x1, y1)),
                sprintf("%4.3f", cor(x2, y2)))
 text <- data.frame(X = c(0.5, 0.7), Y = c(0.1, 0.1),
                    Type = c("1", "2"),
-                   labels = c(paste0("italic(r)==\"", corr_coef[1], "\""),
-                              paste0("italic(r)==\"", corr_coef[2], "\"")))
+                   labels = c(paste("italic(r) == \"", corr_coef[1], "\""),
+                              paste("italic(r) == \"", corr_coef[2], "\"")))
 ggplot(df) +
   geom_point(aes(X, Y), size = 1, alpha = 0.8) +
   geom_text(data = text, mapping = aes(X, Y, label = labels), parse = TRUE) +
@@ -317,7 +317,7 @@ p4 + theme_bw(base_family = "IPAexGothic")
 ## themeをかえる(2)
 
 ```{r theme_classic,dev="cairo_pdf",fig.width=4.5,fig.height=3,out.height="6.5cm",echo=TRUE}
-p4 + theme_classic(base_family = "IPAexGothic")
+p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 ```
 
 <!-- ggthemeパッケージに各種テーマあり -->
@@ -427,12 +427,12 @@ fit <- dlmMLE(g_data$Growth, parm = c(1, 1), build = build, lower = c(0,  0))
 model <- dlmModPoly(order = 1, dV = fit$par[1], dW = fit$par[2])
 filter <- dlmFilter(g_data$Growth, model)
 kf <- data.frame(Year = g_data$Year,
-                 Filtered = dropFirst(filter$m)) %>%
+                 Filter = dropFirst(filter$m)) %>%
   mutate(sd = dlmSvd2var(filter$U.C, filter$D.C) %>%
            unlist() %>%
            dropFirst()) %>%
-  mutate(Lower = qnorm(0.025, Filtered, sd),
-         Upper = qnorm(0.975, Filtered, sd))
+  mutate(Lower = qnorm(0.025, Filter, sd),
+         Upper = qnorm(0.975, Filter, sd))
 ```
 
 アラカシNo.21の年輪成長量
@@ -448,7 +448,7 @@ print(p1)
 表示する（それぞれの値はデータフレーム`kf`に格納しておいてある）。
 
 ```{r geom_ribbon,fig.width=4.5,fig.height=3,out.height="4.5cm",echo=TRUE}
-p1 + geom_line(data = kf, aes(Year, Filtered), colour = "red") +
+p1 + geom_line(data = kf, aes(Year, Filter), colour = "red") +
   geom_ribbon(data = kf, aes(Year, ymin = Lower, ymax = Upper),
               colour = "grey", alpha = 0.4)
 ```
