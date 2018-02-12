@@ -181,7 +181,7 @@ ggplot(data = g_data,
 
 ## すべての点の色をかえる
 
-すべての点を同じにするには，`aes`の外で`colour`を指定する（`geom_*`関数の`colour`引数に指定する）。
+すべての点を同じにするには，**`aes`**関数の外で`colour`を指定する（**`geom_point`**関数の`colour`引数に指定する）。
 
 ```{r colour3, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
@@ -189,7 +189,8 @@ p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
 
 ## 座標系
 
-Y軸は実は下むきなので，軸を反転させる。また，X軸とY軸の長さをそろえる。
+Y軸は実は下むきなので，軸を反転させる（**`scale_y_reverse`**関数）。
+また，X軸とY軸の長さをそろえる（**`coord_fixed`**関数）。
 
 \textcolor{red}{\bfseries 軸の指定なども`+'演算子で追加する。}
 
@@ -257,9 +258,9 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
   theme(text = element_text(family = "IPAexGothic", size = 10))
 ```
 
-文字コードはUTF-8にしておくとよい（ただし、日本語版WindowsのRでは文字化けするかも）。
+文字コードはUTF-8にしておくとよい（ただし，日本語版WindowsのRでは文字化けするかも）。
 
-Windowsでは**`windowsFonts`**関数でフォントの設定をしておくか、**extrafont**パッケージを使用して、必要な設定をしておく。
+Windowsでは**`windowsFonts`**関数でフォントの設定をしておくか，**extrafont**パッケージをインストールして，必要な設定をしておく。
 
 
 ## 漢字をつかった表示
@@ -272,26 +273,29 @@ print(p4)
 
 **`ggsave`**関数などをつかう。
 
-日本語フォントを埋め込んだPDFを出力するには`device = cairo_pdf`とする（macOSではXQuartzのインストールが必要になるかもしれない）。
-
 ```{r cairo_pdf,echo=TRUE}
-ggsave("p4.pdf", plot = p4, device = cairo_pdf,
+ggsave("p4.pdf", device = cairo_pdf,
        width = 12, height = 8, units = "cm")
 ```
 
-Windows環境では、**extrafont**パッケージを利用すると、TrueTypeフォントのPDF埋め込みができるようだ。
+日本語フォントを埋め込んだPDFを出力するには`device = cairo_pdf`とする（macOSではXQuartzのインストールが必要になるかもしれない）。
+ただし、すべてのフォントでうまくいくとは限らないようだ。
 
-macOSでは**`quartz.save`**関数も使用可。
+<!--
+\includegraphics[width=6cm]{p4.pdf}
+-->
 
+WindowsでPDFに日本語フォントを埋め込むためには，**extrafont**パッケージを利用する必要がある。ただし，OpenTypeフォントは利用不可らしい。
+
+このほか，macOSでは**`quartz.save`**関数も利用可能。
+
+<!--
 ```{r quartz_save,echo=TRUE,results='hide',message=FALSE}
 if (Sys.info()["sysname"] == "Darwin") {
   quartz.save("p4_quartz.pdf", type = "pdf",
               width = 12 / 2.54, height = 8 / 2.54)
 }
 ```
-
-<!--
-\includegraphics[width=6cm]{p4.pdf}
 -->
 
 ## Facet
