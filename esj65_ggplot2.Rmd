@@ -517,6 +517,21 @@ p + geom_density(alpha = 0.5, show.legend = FALSE) +
            family = "Helvetica")
 ```
 
+## 数式
+
+`parse = TRUE`で数式を解釈して表示
+
+```{r expression,fig.width=4.5,fig.height=2.5,out.height="4.5cm",echo=TRUE}
+ggplot(data.frame(x = seq(-5, 5, 0.01)), aes(x)) +
+  stat_function(fun = function(x) {1 / (1 + exp(-x))}) +
+  annotate("text", x = -5, y = 0.875,
+      label = paste("italic(y) == frac(1,", 
+                    "1 + exp(-(beta[0] + beta[1]*italic(x))))"),
+      parse = TRUE, size = 4, hjust = 0)
+```
+
+
+
 ## 棒グラフ
 
 **`geom_bar`**関数
