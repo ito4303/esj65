@@ -55,6 +55,14 @@ ggplot(data = iris,
 - \large 関連パッケージもどんどんできている。
     - GGally, ggmcmc, ggmap, ggthemes,\dots
 
+<!--
+GGally: 散布図行列, モデルの係数のプロット, Kaplan-Meierプロットなどさまざまなグラフ
+    http://ggobi.github.io/ggally/
+ggmcmc: MCMCの結果を視覚化
+ggmap: 地理データ, Google Mapなど
+ggthemes: さまざまなテーマ
+-->
+
 ## 開発者など
 
 - 開発者: Hadley Wickham & Winston Chang
@@ -114,6 +122,10 @@ ggplot(df) +
 # ggplot2をつかってみる
 
 ## 使用するデータ
+
+\textcolor{red}{\large\bfseries ggplot2はtidyデータと相性がいい。}
+
+\vspace{12px}
 
 アラカシとクロバイの空間分布・胸高直径データ
 
@@ -181,7 +193,7 @@ ggplot(data = g_data,
 
 ## すべての点の色をかえる
 
-すべての点を同じにするには，**`aes`**関数の外で`colour`を指定する（**`geom_point`**関数の`colour`引数に指定する）。
+**`aes`**関数の外で`colour`を指定する（**`geom_point`**関数の`colour`引数に指定する）と，すべての点の色が指定した色になる。
 
 ```{r colour3, fig.width=5.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_point(mapping = aes(x = X, y = Y), colour = "red")
