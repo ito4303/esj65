@@ -53,7 +53,7 @@ ggplot(data = iris,
 - \large 統一された文法でさまざまな種類のグラフをえがける。
 
 - \large 関連パッケージもどんどんできている。
-    - GGally, ggmcmc, ggmap, ggthemes,\dots
+    - GGally, ggmcmc, ggmap, ggthemes, egg\dots
 
 <!--
 GGally: 散布図行列, モデルの係数のプロット, Kaplan-Meierプロットなどさまざまなグラフ
@@ -61,6 +61,7 @@ GGally: 散布図行列, モデルの係数のプロット, Kaplan-Meierプロ�
 ggmcmc: MCMCの結果を視覚化
 ggmap: 地理データ, Google Mapなど
 ggthemes: さまざまなテーマ
+egg: 複数のグラフを並べるなど
 -->
 
 ## 開発者など
@@ -121,15 +122,31 @@ ggplot(df) +
 
 # ggplot2をつかってみる
 
-## 使用するデータ
+## インストールとパッケージのロード
+
+**`ggplot2`**パッケージをインストールして，パッケージをロードする。
+
+```{r load_package, eval=FALSE, echo=TRUE}
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+あるいは，**`tidyverse`**パッケージをインストール、ロードしてもよい。
+
+\vspace{12pt}
+
+<!-- http://notchained.hatenablog.com/entry/tidyverse -->
 
 \textcolor{red}{\large\bfseries ggplot2はtidyデータと相性がいい。}
 
+## 使用するデータ
+
+
 \vspace{12px}
 
-アラカシとクロバイの空間分布・胸高直径データ
+アラカシとクロバイの空間分布・胸高直径データ(`g_data`)
 
-\footnotesize データ: Itô (2017) Biodiversity Data Journal 5: e11732.
+\scriptsize Itô (2017) Biodiversity Data Journal 5: e11732.
 https://doi.org/10.3897/BDJ.5.e11732
 https://doi.org/10.5061/dryad.7f399
 (CC0 https://creativecommons.org/publicdomain/zero/1.0/)
@@ -146,9 +163,12 @@ g_data <- inner_join(m_data, s_data, by = "Stem") %>%
   transmute(X = X1, Y = Y1, Species, DBH)
 ```
 
+\large 毎木調査のデータから、樹幹位置図を作成する。
+
 ```{r show_data, echo=FALSE}
 head(g_data)
 ```
+
 
 ## ggplot関数
 
@@ -363,12 +383,13 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 
 ## 折れ線グラフ(1)
 
-使用するデータ: アラカシの年輪データ
-\footnotesize Itô and Sumida (2017) Ecol. Res 32:105-105.
+使用するデータ: アラカシの年輪データ(`q_data`)
+
+\scriptsize Itô and Sumida (2017) Ecol. Res 32:105-105.
 https:doi.org/10.1007/s11284-016-1424-1
 (CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/)
 
-地際の各年の直径(mm)を使用。
+\normalsize 地際の各年の直径(mm)を使用。
 
 ```{r read_tree_ring_data, include=FALSE}
 library(readr)
@@ -402,7 +423,7 @@ p + geom_line()
 p + geom_line(linetype = 2) + geom_point(size = 2)
 ```
 
-## データー全体をgeom_lineで表示
+## データ全体をgeom_lineで表示
 
 ```{r geom_line3,fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 ggplot(q_data) + geom_line(aes(Year, Diameter))
@@ -427,18 +448,18 @@ ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 
 ```{r dlm,include=FALSE}
 q_data.21 <- filter(q_data, No == 21)
-g_data <- data.frame(Year = as.integer(q_data.21$Year[-nrow(q_data.21)]),
-                     Growth = q_data.21$Diameter[-nrow(q_data.21)] - 
-                              q_data.21$Diameter[2:nrow(q_data.21)]) %>%
+q2_data <- data.frame(Year = as.integer(q_data.21$Year[-nrow(q_data.21)]),
+                      Growth = q_data.21$Diameter[-nrow(q_data.21)] - 
+                               q_data.21$Diameter[2:nrow(q_data.21)]) %>%
   arrange(Year)
 library(dlm)
 build <- function(theta) {
   dlmModPoly(order = 1, dV = theta[1], dW = theta[2])
 }
-fit <- dlmMLE(g_data$Growth, parm = c(1, 1), build = build, lower = c(0,  0))
+fit <- dlmMLE(q2_data$Growth, parm = c(1, 1), build = build, lower = c(0,  0))
 model <- dlmModPoly(order = 1, dV = fit$par[1], dW = fit$par[2])
-filter <- dlmFilter(g_data$Growth, model)
-kf <- data.frame(Year = g_data$Year,
+filter <- dlmFilter(q2_data$Growth, model)
+kf <- data.frame(Year = q2_data$Year,
                  Filter = dropFirst(filter$m)) %>%
   mutate(sd = dlmSvd2var(filter$U.C, filter$D.C) %>%
            unlist() %>%
@@ -447,10 +468,10 @@ kf <- data.frame(Year = g_data$Year,
          Upper = qnorm(0.975, Filter, sd))
 ```
 
-アラカシNo.21の年輪成長量
+アラカシNo.21の年輪成長量(`q2_data`)
 
 ```{r q_data3,fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
-p1 <- ggplot(g_data) + geom_line(aes(Year, Growth))
+p1 <- ggplot(q2_data) + geom_line(aes(Year, Growth))
 print(p1)
 ```
 
@@ -467,7 +488,7 @@ p1 + geom_line(data = kf, aes(Year, Filter), colour = "red") +
 
 ## 平滑化
 
-**`geom_smooth`**関数（**`geom_smooth`**(method = "lm")で直線回帰）
+**`geom_smooth`**関数（**`geom_smooth`**`(method = "lm")`で直線回帰）
 
 ```{r geom_smooth,fig.width=4.5,fig.height=3,out.height="5.5cm",echo = TRUE}
 p1 + geom_smooth(aes(Year, Growth), method = "loess")
