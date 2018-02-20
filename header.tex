@@ -1,5 +1,6 @@
-%% https://blog.miz-ar.info/2015/09/latex-hyperref-tips/
-%% https://tex.stackexchange.com/questions/24445/hyperref-lualatex-and-unicode-bookmarks-issue-garbled-page-numbers-in-ar-for-l
+%% PDFメタデータの文字化け防止
+% https://blog.miz-ar.info/2015/09/latex-hyperref-tips/
+% https://tex.stackexchange.com/questions/24445/hyperref-lualatex-and-unicode-bookmarks-issue-garbled-page-numbers-in-ar-for-l
 \hypersetup{%
   pdfencoding=auto
 }
@@ -8,20 +9,16 @@
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage[scale=1.0]{tgheros}
-%\usepackage[scale=0.95]{zi4}
 \usepackage[scaled]{beramono}
-%\usepackage{fontspec}
-%\setmainfont[Scale=1.0]{TeXGyreHeros}
-%\setsansfont[Scale=1.0]{TeXGyreHeros}
-%\setmonofont{NotoSansMonoCJKjp}
+
 
 %% Japanese font
 \usepackage{luatexja-otf}
 \usepackage[match,deluxe,expert,noto-otf]{luatexja-preset}
 \renewcommand{\kanjifamilydefault}{\gtdefault}
 
-%% https://stackoverflow.com/questions/38323331/code-chunk-font-size-in-beamer-with-knitr-and-latex
 %% change fontsize of R code
+% https://stackoverflow.com/questions/38323331/code-chunk-font-size-in-beamer-with-knitr-and-latex
 \let\oldShaded\Shaded
 \let\endoldShaded\endShaded
 \renewenvironment{Shaded}{\footnotesize\oldShaded}{\endoldShaded}
