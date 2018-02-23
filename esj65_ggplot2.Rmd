@@ -131,7 +131,7 @@ install.packages("ggplot2")
 library(ggplot2)
 ```
 
-あるいは，**`tidyverse`**パッケージをインストール、ロードしてもよい。
+あるいは，**`tidyverse`**パッケージをインストール，ロードしてもよい。
 
 \vspace{12pt}
 
@@ -146,7 +146,7 @@ library(ggplot2)
 
 アラカシとクロバイの空間分布・胸高直径データ(`g_data`)
 
-\scriptsize Itô (2017) Biodiversity Data Journal 5: e11732.
+\tiny Itô (2017) Biodiversity Data Journal 5: e11732.
 https://doi.org/10.3897/BDJ.5.e11732
 https://doi.org/10.5061/dryad.7f399
 (CC0 https://creativecommons.org/publicdomain/zero/1.0/)
@@ -163,9 +163,9 @@ g_data <- inner_join(m_data, s_data, by = "Stem") %>%
   transmute(X = X1, Y = Y1, Species, DBH)
 ```
 
-\large 毎木調査のデータから、樹幹位置図を作成する。
+\large 毎木調査のデータから，樹幹位置図を作成する。
 
-```{r show_data, echo=FALSE}
+```{r show_data, echo=TRUE}
 head(g_data)
 ```
 
@@ -311,7 +311,7 @@ ggsave("p4.pdf", device = cairo_pdf,
 ```
 
 日本語フォントを埋め込んだPDFを出力するには`device = cairo_pdf`とする（macOSではXQuartzのインストールが必要になるかもしれない）。
-ただし、すべてのフォントでうまくいくとは限らないようだ。
+ただし，すべてのフォントでうまくいくとは限らないようだ。
 
 <!--
 \includegraphics[width=6cm]{p4.pdf}
@@ -385,7 +385,7 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 
 使用するデータ: アラカシの年輪データ(`q_data`)
 
-\scriptsize Itô and Sumida (2017) Ecol. Res 32:105-105.
+\tiny Itô and Sumida (2017) Ecol. Res 32:105-105.
 https:doi.org/10.1007/s11284-016-1424-1
 (CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/)
 
@@ -616,6 +616,53 @@ p + geom_raster(aes(fill = z)) + coord_fixed()
 ```{r geom_contour,fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
 p + geom_contour(aes(z = z), binwidth = 0.01) + coord_fixed()
 ```
+
+## 地図
+
+```{r kokudosuuchi, message=FALSE, warning=FALSE, include=FALSE, cache=TRUE}
+library(kokudosuuchi)
+
+# 行政区域 - 北海道 - 2017年
+hokkaido_url <- getKSJURL("N03", prefCode = 1) %>%
+  filter(year == 2017)
+hokkaido_2017 <- getKSJData(hokkaido_url$zipFileUrl)
+```
+
+```{r filter_sapporo, message=FALSE, warning=FALSE, include=FALSE}
+library(sf)
+
+sapporo <- hokkaido_2017[[1]] %>%
+  filter(N03_003 == "札幌市")
+sapporo_df <- as_Spatial(sapporo$geometry) %>%
+  fortify() %>%
+  mutate(id = recode_factor(id,
+                            ID1 = "中央区",
+                            ID2 = "北区",
+                            ID3 = "東区",
+                            ID4 = "白石区",
+                            ID5 = "豊平区",
+                            ID6 = "南区",
+                            ID7 = "西区",
+                            ID8 = "厚別区",
+                            ID9 = "手稲区",
+                            ID10 = "清田区",
+                            .default = ""))
+```
+
+地図のオブジェクトを用意して**`geom_polygon`**関数で描画。
+
+```{r polygon, dev="cairo_pdf", fig.width=4.5, fig.height=3, out.height="3.6cm", echo=TRUE}
+ggplot(sapporo_df) + coord_fixed() +
+  geom_polygon(aes(long, lat, fill = id), colour = "grey") +
+  theme_bw(base_family = "IPAexGothic")
+```
+
+\scriptsize この地図は，**`kokudosuuchi`**パッケージを利用して，
+国土交通省国土数値情報行政区域データ(N03-170101_01)により描画しました。
+
+
+\small ggplot2開発版には**`geom_sf`**関数がある。
+いずれは，地図描画にはそちらがつかわれるようになるはず。
 
 # おわりに
 
