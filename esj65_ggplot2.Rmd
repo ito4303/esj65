@@ -7,7 +7,7 @@ institute: "森林総合研究所北海道支所"
 output:
   beamer_presentation:
     latex_engine: lualatex
-    keep_tex: false
+    keep_tex: true
     includes:
       in_header: header.tex
 ---
@@ -46,14 +46,16 @@ ggplot(data = iris,
 
 ## ggplot2
 
-- \LARGE ggplot2パッケージ
+\LARGE
 
-    - gg: Grammer of Graphics
+-  ggplot2パッケージ
+    - \normalsize gg: Grammer of Graphics
 
-- \large 統一された文法でさまざまな種類のグラフをえがける。
+\large
 
-- \large 関連パッケージもどんどんできている。
-    - GGally, ggmcmc, ggmap, ggthemes, egg\dots
+- 統一された文法でさまざまな種類のグラフをえがける。
+- 関連パッケージもどんどんできている。
+    - \normalsize GGally, ggmcmc, ggmap, ggthemes, egg\dots
 
 <!--
 GGally: 散布図行列, モデルの係数のプロット, Kaplan-Meierプロットなどさまざまなグラフ
@@ -67,10 +69,8 @@ egg: 複数のグラフを並べるなど
 ## 開発者など
 
 - 開発者: Hadley Wickham & Winston Chang
-
 - ウェブサイト: http://ggplot2.tidyverse.org/
-
-- 開発履歴 (https://github.com/tidyverse/ggplot2/releases より)
+- 開発履歴 \small (https://github.com/tidyverse/ggplot2/releases より)
     - 2015-01-10 ver. 1.0.0
     - 2015-12-19 ver. 2.0.0
     - 2016-03-02 ver. 2.1.0
@@ -79,9 +79,11 @@ egg: 複数のグラフを並べるなど
 
 ## ここでの目的
 
->- \Large 得られたデータを可視化する。
+\Large
 
->- \Large → データにあった解析
+>- 得られたデータを可視化する。
+
+>- → データにあった解析
 
 ## たとえば
 
@@ -356,11 +358,13 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 
 ## ここまでのまとめ
 
-- \large `ggplot`関数でオブジェクト生成。
-- \large `aes`関数で，データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
-- \large `geom_*`関数で描画（レイヤー追加）。
-- \large テーマ，軸，Facetなどをそれぞれの関数で設定する。
-- \large パーツや設定を`+'演算子で追加していって，グラフを完成させる。
+\large
+ 
+- `ggplot`関数でオブジェクト生成。
+- `aes`関数で，データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
+- `geom_*`関数で描画（レイヤー追加）。
+- テーマ，軸，Facetなどをそれぞれの関数で設定する。
+- パーツや設定を`+'演算子で追加していって，グラフを完成させる。
 
 
 # ほかの種類のグラフは
