@@ -83,7 +83,7 @@ egg: 複数のグラフを並べるなど
 
 >- 得られたデータを可視化する。
 
->- → データにあった解析
+>- データにあった解析
 
 ## たとえば
 
@@ -117,8 +117,12 @@ ggplot(df) +
 >- グラフ作成に，手作業（コピー&ペースト）をできるだけ減らす。できれば なくす。
 >- R（と，RStudioなど）で自動化する。
 
->- \Large\bfseries → 手作業に由来するまちがいをなくす。
->- \Large\bfseries → Reproducible Research（の一部）
+\Large\bfseries
+
+>-  手作業に由来するまちがいをなくす。
+>-  Reproducible Research（の一部）
+
+\normalsize\mdseries
 
 >- この発表資料も，RStudioで一括処理
 
@@ -282,7 +286,7 @@ NotoSansCJKjp-Regular を使用するとき
 theme(text = element_text(family = "NotoSansCJKjp-Regular", size = 10))
 -->
 
-```{r Japanese_font,echo=TRUE}
+```{r Japanese_font, echo=TRUE}
 p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
   scale_colour_discrete(name = "種",
                         labels = c("アラカシ", "クロバイ")) +
@@ -307,7 +311,7 @@ print(p4)
 
 **`ggsave`**関数などをつかう。
 
-```{r cairo_pdf, echo=TRUE}
+```{r cairo_pdf, echo=TRUE, eval=FALSE}
 ggsave("p4.pdf", device = cairo_pdf,
        width = 12, height = 8, units = "cm")
 ```
@@ -632,7 +636,7 @@ hokkaido_url <- getKSJURL("N03", prefCode = 1) %>%
 hokkaido_2017 <- getKSJData(hokkaido_url$zipFileUrl)
 ```
 
-```{r filter_sapporo, message=FALSE, warning=FALSE, include=FALSE}
+```{r filter_sapporo, message=FALSE, warning=FALSE, include=FALSE, cache=TRUE}
 library(sf)
 
 sapporo <- hokkaido_2017[[1]] %>%
