@@ -30,7 +30,7 @@ https://github.com/ito4303/esj65 で公開
 
 ## このごろよくみるこのようなグラフ
 
-```{r introduction,　fig.width=4.5,　fig.height=3,　out.height="7cm",　echo=FALSE, cache=TRUE}
+```{r introduction, fig.width=4.5, fig.height=3, out.height="7cm", echo=FALSE, cache=TRUE}
 ggplot(data = iris,
        mapping = aes(x = Sepal.Length, y = Sepal.Width,
                      colour = Species)) +
@@ -83,7 +83,7 @@ egg: 複数のグラフを並べるなど
 
 >- 得られたデータを可視化する。
 
->- → データにあった解析
+>- データにあった解析
 
 ## たとえば
 
@@ -119,8 +119,8 @@ ggplot(df) +
 
 \Large\bfseries
 
->-  → 手作業に由来するまちがいをなくす。
->-  → Reproducible Research（の一部）
+>- 手作業に由来するまちがいをなくす。
+>- Reproducible Research（の一部）
 
 \normalsize\mdseries
 
@@ -189,11 +189,11 @@ print(p)
 
 ## geom関数
 
-**`geom_point`** 関数: 散布図を描画（レイヤーに追加）する関数
+`geom_point` 関数: 散布図を描画（レイヤーに追加）する関数
 
 `mapping` 引数: 変数のマッピングを渡す。
 
-**`aes`** 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
+`aes` 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
 
 \textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに`+'演算子で，レイヤーを追加する。}
 
@@ -590,7 +590,7 @@ p + geom_bar(fill = "grey50")
 ## stat_*関数
 
 統計的変換, 例) **`stat_count`**: データの頻度分布を計算する。
-```{r stat_count, fig.width=4.5, fig.height=3, out.height="5cm", echo=TRUE, cache=TRUE}
+```{r stat_count, fig.width=4, fig.height=2.5, out.height="4cm", echo=TRUE, cache=TRUE}
 p + stat_count(geom = "bar", fill = "grey50")
 ```
 
