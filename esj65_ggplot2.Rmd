@@ -665,8 +665,7 @@ ggplot(sapporo_df) + coord_fixed() +
   theme_bw(base_family = "IPAexGothic")
 ```
 
-\scriptsize この地図は，**`kokudosuuchi`**パッケージを利用して，
-国土交通省国土数値情報行政区域データ(N03-170101_01)により描画しました。
+\scriptsize この地図の作成には，国土交通省国土数値情報行政区域データ(N03-170101_01)を使用した。Rでは，**`kokudosuuchi`**パッケージにより利用可能。
 
 
 \small ggplot2開発版には**`geom_sf`**関数がある。
