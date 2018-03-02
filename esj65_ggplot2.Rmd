@@ -157,19 +157,17 @@ library(ggplot2)
 
 ## 使用するデータ
 
+京都市内の広葉樹二次林の毎木調査データ。\footnote{Itô (2017) Biodiversity Data Journal 5: e11732. \\
+\hspace{14px} https://doi.org/10.3897/BDJ.5.e11732 \\
+\hspace{14px} https://doi.org/10.5061/dryad.7f399 \\
+\hspace{14px} (CC0 https://creativecommons.org/publicdomain/zero/1.0/)}
 
-\vspace{12px}
+50m $\times$ 50mの範囲で，アラカシとクロバイの幹の座標(X, Y)と胸高直径(DBH)を抽出する。
 
-アラカシとクロバイの空間分布・胸高直径データ
-
-\footnotesize Itô (2017) Biodiversity Data Journal 5: e11732.
-https://doi.org/10.3897/BDJ.5.e11732
-https://doi.org/10.5061/dryad.7f399
-(CC0 https://creativecommons.org/publicdomain/zero/1.0/)
 
 ## データの読み込みと整形
 
-2014年のアラカシとクロバイのDBHデータを抽出する(50m $\times$ 50mの範囲)
+1993年と2014年のデータと，2014年だけのデータを用意する。
 
 ```{r read_data, cache=TRUE, message=FALSE}
 library(readr)
@@ -197,7 +195,7 @@ g_data <- filter(gy_data, Year == 2014)
 head(g_data)
 ```
 
-\large このデータから，樹幹位置図を作成する。
+このデータから，樹幹位置図を作成する。
 
 
 ## ggplot関数
@@ -256,17 +254,17 @@ Y軸は実は下むきなので，軸を反転させる（**`scale_y_reverse`**�
 
 \textcolor{red}{\bfseries 軸の指定なども`+'演算子で追加する。}
 
-```{r coord, fig.width=5, fig.height=3, out.height="5cm", cache=TRUE}
+```{r coord, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
 p2 <- ggplot(g_data) + xlim(0, 50) +
   scale_y_reverse(limits = c(50, 0)) + coord_fixed(ratio = 1)
 p2 + geom_point(mapping = aes(x = X, y = Y, colour = Species))
 ```
 
-## 種類ごとに点の形をかえる
+## 樹種ごとに点の形をかえる
 
 **`aes`**関数の`shape`引数を指定する。
 
-```{r point_shape, fig.width=5, fig.height=3, out.height="5cm", cache=TRUE}
+```{r point_shape, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
 p2 + geom_point(aes(x = X, y = Y,
                     colour = Species, shape = Species))
 ```
@@ -275,7 +273,7 @@ p2 + geom_point(aes(x = X, y = Y,
 
 **`geom_point`**関数の`size`引数を指定する。
 
-```{r point_size, fig.width=5, fig.height=3, out.height="5cm", cache=TRUE}
+```{r point_size, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
 p2 + geom_point(aes(x = X, y = Y,
                     colour = Species, shape = Species),
                 size = 4, alpha = 0.7)
@@ -285,7 +283,7 @@ p2 + geom_point(aes(x = X, y = Y,
 
 **`aes`**関数の`size`引数を指定する。
 
-```{r point_size2, fig.width=5, fig.height=3, out.height="5cm", cache=TRUE}
+```{r point_size2, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
 p3 <- p2 +
   geom_point(aes(x = X, y = Y, 
                  colour = Species, shape = Species, size = DBH),
@@ -297,7 +295,7 @@ print(p3)
 
 **`scale_colour_manual`**関数で，任意の色を指定できる。
 
-```{r spec_colour, fig.width=5, fig.height=3, out.height="5cm", cache=TRUE}
+```{r spec_colour, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
 p3 + scale_colour_manual(values = c("red", "#3355FF"))
 ```
 
@@ -320,14 +318,14 @@ p4 <- p3 + labs(x = "X軸 (m)", y = "Y軸 (m)") +
   theme(text = element_text(family = "IPAexGothic", size = 10))
 ```
 
-文字コードはUTF-8にしておくとよい（ただし，日本語版WindowsのRでは文字化けするかも）。
+文字コードはUTF-8にしておくとよい。\footnote{日本語版WindowsのR.exeでは文字化けするかも。}
 
 Windowsでは**`windowsFonts`**関数でフォントの設定をしておくか，**extrafont**パッケージをインストールして，必要な設定をしておく。
 
 
 ## 漢字をつかった表示
 
-```{r Japanese_font2, dev="cairo_pdf", fig.width=5, fig.height=3, out.height="7cm", echo=FALSE, cache=TRUE}
+```{r Japanese_font2, dev="cairo_pdf", fig.width=4.5, fig.height=3, out.height="7cm", echo=FALSE, cache=TRUE}
 print(p4)
 ```
 
@@ -340,16 +338,22 @@ ggsave("p4.pdf", device = cairo_pdf,
        width = 12, height = 8, units = "cm")
 ```
 
-日本語フォントを埋め込んだPDFを出力するには`device = cairo_pdf`とする（macOSではXQuartzのインストールが必要になるかもしれない）。
-ただし，すべてのフォントでうまくいくとは限らないようだ。
+日本語フォントを埋め込んだPDFを出力するには  
+`device = cairo_pdf`  
+とする。
+\footnote{macOSではXQuartzのインストールが必要になるかもしれない。}
+ただし，すべてのフォントでうまくいくとは限らない。
 
 <!--
 \includegraphics[width=6cm]{p4.pdf}
 -->
 
-WindowsでPDFに日本語フォントを埋め込むためには，**extrafont**パッケージを利用する必要がある。ただし，OpenTypeフォントは利用不可らしい。
+WindowsでPDFに日本語フォントを埋め込むためには，**extrafont**パッケージを利用する必要がある。
+\footnote{ただし，OpenTypeフォントは利用不可らしい。}
 
-このほか，macOSでは**`quartz.save`**関数も利用可能。
+\vspace{12px}
+
+macOSでは，**`ggsave`**関数のほか，**`quartz.save`**関数も利用可能。
 
 <!--
 ```{r quartz_save,echo=TRUE,results='hide',message=FALSE}
@@ -394,8 +398,6 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 
 ## ここまでのまとめ
 
-\large
- 
 - `ggplot`関数でオブジェクト生成。
 - `aes`関数で，データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
 - `geom_*`関数で描画（レイヤー追加）。
@@ -423,13 +425,12 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 
 ## 次のデータ
 
-使用するデータ: アラカシの年輪データ
+京都市内の広葉樹二次林で採取したアラカシの年輪データ。
+\footnote{Itô and Sumida (2017) Ecol. Res. 32:105-105. \\
+\hspace{14px} https:doi.org/10.1007/s11284-016-1424-1 \\
+\hspace{14px} (CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/)}
 
-\footnotesize Itô and Sumida (2017) Ecol. Res 32:105-105.
-https:doi.org/10.1007/s11284-016-1424-1
-(CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/)
-
-\normalsize 地際の各年の直径(mm)を使用。
+地際の各年の直径(mm)を使用。
 
 ```{r read_tree_ring_data, cache=TRUE, message=FALSE}
 q_data_file <- "Tree_ring_data.csv"
@@ -488,7 +489,7 @@ ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 
 ## 別のデータを重ねる(1)
 
-アラカシNo.21の年輪成長量を用意する。
+アラカシNo.21の各年の肥大成長量を用意する。
 
 ```{r q_data3, fig.width=4.5, fig.height=3, out.height="4.5cm", cache=TRUE}
 q21 <- filter(q_data, No == 21) %>%
@@ -500,13 +501,15 @@ print(p1)
 
 ## カルマンフィルタによるフィルタリング
 
+フィルタリングした値と95%信頼区間をデータフレーム`kf`に格納する。
+
 ```{r dlm, message=FALSE, cache=TRUE}
 library(dlm)
 build <- function(theta) {
   dlmModPoly(order = 1, dV = theta[1], dW = theta[2])
 }
 fit <- dlmMLE(q21$Growth, parm = c(1, 1), 
-              build = build, lower = c(0,  0))
+              build = build, lower = c(0, 0))
 model <- dlmModPoly(order = 1,
                     dV = fit$par[1], dW = fit$par[2])
 filter <- dlmFilter(q21$Growth, model)
@@ -522,7 +525,7 @@ kf <- data.frame(Year = q21$Year,
 ## 別のデータを重ねる(2)
 
 カルマンフィルタでフィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
-表示する（それぞれの値はデータフレーム`kf`に格納しておいてある）。
+表示する。
 
 ```{r geom_ribbon, fig.width=4.5, fig.height=3, out.height="4.5cm", cache=TRUE}
 p1 + geom_line(data = kf, aes(Year, Filter), colour = "red") +
@@ -532,7 +535,8 @@ p1 + geom_line(data = kf, aes(Year, Filter), colour = "red") +
 
 ## 平滑化
 
-**`geom_smooth`**関数（**`geom_smooth`**`(method = "lm")`で直線回帰）
+**`geom_smooth`**関数で平滑化できる。  
+**`geom_smooth`**`(method = "lm")`とすると直線回帰。
 
 ```{r geom_smooth, fig.width=4.5, fig.height=3, out.height="5.5cm", echo = TRUE, cache=TRUE}
 p1 + geom_smooth(aes(Year, Growth), method = "loess")
