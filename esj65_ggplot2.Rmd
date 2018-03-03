@@ -158,9 +158,9 @@ library(ggplot2)
 ## 使用するデータ
 
 京都市内の広葉樹二次林の毎木調査データ。\footnote{Itô (2017) Biodiversity Data Journal 5: e11732. \\
-\hspace{14px} https://doi.org/10.3897/BDJ.5.e11732 \\
-\hspace{14px} https://doi.org/10.5061/dryad.7f399 \\
-\hspace{14px} (CC0 https://creativecommons.org/publicdomain/zero/1.0/)}
+\hspace{14pt} https://doi.org/10.3897/BDJ.5.e11732 \\
+\hspace{14pt} https://doi.org/10.5061/dryad.7f399 \\
+\hspace{14pt} (CC0 https://creativecommons.org/publicdomain/zero/1.0/)}
 
 50m $\times$ 50mの範囲で，アラカシとクロバイの幹の座標(X, Y)と胸高直径(DBH)を抽出する。
 
@@ -351,7 +351,7 @@ ggsave("p4.pdf", device = cairo_pdf,
 WindowsでPDFに日本語フォントを埋め込むためには，**extrafont**パッケージを利用する必要がある。
 \footnote{ただし，OpenTypeフォントは利用不可らしい。}
 
-\vspace{12px}
+\vspace{12pt}
 
 macOSでは，**`ggsave`**関数のほか，**`quartz.save`**関数も利用可能。
 
@@ -427,8 +427,8 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
 
 京都市内の広葉樹二次林で採取したアラカシの年輪データ。
 \footnote{Itô and Sumida (2017) Ecol. Res. 32:105-105. \\
-\hspace{14px} https:doi.org/10.1007/s11284-016-1424-1 \\
-\hspace{14px} (CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/)}
+\hspace{14pt} https:doi.org/10.1007/s11284-016-1424-1 \\
+\hspace{14pt} (CC-BY 4.0 https://creativecommons.org/licenses/by/4.0/)}
 
 地際の各年の直径(mm)を使用。
 
@@ -453,7 +453,7 @@ head(q_data)
 
 No.3の幹のみを抽出して表示。
 
-```{r geom_line1,fig.width=4.5,fig.height=3,out.height="5.5cm",echo=TRUE}
+```{r geom_line1, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
 p <- filter(q_data, No == 3) %>% ggplot(aes(Year, Diameter))
 p + geom_line()
 ```
@@ -628,6 +628,7 @@ p + geom_bar(fill = "grey50")
 ## stat_*関数
 
 統計的変換, 例) **`stat_count`**: データの頻度分布を計算する。
+
 ```{r stat_count, fig.width=4, fig.height=2.5, out.height="4cm", cache=TRUE}
 p + stat_count(geom = "bar", fill = "grey50")
 ```
@@ -718,8 +719,8 @@ ggplot(sapporo_df) + coord_fixed() +
 
 きょう紹介できたのはごく一部。下のリンクなどを参考に。
 
-- ggplot2 Reference（公式ドキュメント）
-    - http://ggplot2.tidyverse.org/reference/
+- ggplot2（公式ウェブサイト）
+    - http://ggplot2.tidyverse.org/
 - ggplot2に関する資料（前田和寛 `@kazutan' さん）
     - https://kazutan.github.io/kazutanR/ggplot2_links.html
 - ggplot2 — きれいなグラフを簡単に合理的に（岩嵜航さん）
