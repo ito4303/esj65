@@ -179,20 +179,20 @@ s_data_file <- "Stem_data.csv"
 m_data_file <- "Measurement_data.csv"
 s_data <- read_csv(paste0(github_dir, s_data_file))
 m_data <- read_csv(paste0(github_dir, m_data_file))
-gy_data <- inner_join(m_data, s_data, by = "Stem") %>%
+g_data <- inner_join(m_data, s_data, by = "Stem") %>%
   filter(Year %in% c(1993, 2014) & X1 < 50 &
            Species %in% c("Quercus glauca",
                           "Symplocos prunifolia") &
            !is.na(DBH)) %>%
   transmute(X = X1, Y = Y1, Year, Species, DBH)
-g_data <- filter(gy_data, Year == 2014)
+g_2014 <- filter(g_data, Year == 2014)
 ```
 
 ## データの確認
 
 
 ```{r show_data}
-head(g_data)
+head(g_2014)
 ```
 
 このデータから，樹幹位置図を作成する。
@@ -205,7 +205,7 @@ head(g_data)
 <!-- 形式的はgeom_blankが使われている。 -->
 
 ```{r ggplot_func, fig.width=5.5, fig.height=3, out.height="6cm", cache=TRUE}
-p <- ggplot(data = g_data)
+p <- ggplot(data = g_2014)
 print(p)
 ```
 
@@ -234,7 +234,7 @@ p + geom_point(mapping = aes(x = X, y = Y, colour = Species))
 ## こうしてもおなじ
 
 ```{r colour2, fig.width=5.5, fig.height=3, out.height="5.5cm", cache=TRUE}
-ggplot(data = g_data,
+ggplot(data = g_2014,
        mapping = aes(x = X, y = Y, colour = Species)) +
   geom_point()
 ```
@@ -255,7 +255,7 @@ Y軸は実は下むきなので，軸を反転させる（**`scale_y_reverse`**�
 \textcolor{red}{\bfseries 軸の指定なども`+'演算子で追加する。}
 
 ```{r coord, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
-p2 <- ggplot(g_data) + xlim(0, 50) +
+p2 <- ggplot(g_2014) + xlim(0, 50) +
   scale_y_reverse(limits = c(50, 0)) + coord_fixed(ratio = 1)
 p2 + geom_point(mapping = aes(x = X, y = Y, colour = Species))
 ```
@@ -364,6 +364,22 @@ if (Sys.info()["sysname"] == "Darwin") {
 ```
 -->
 
+## themeをかえる(1)
+
+```{r theme_bw,dev="cairo_pdf", fig.width=4.5, fig.height=3, out.height="6cm", cache=TRUE}
+p4 + theme_bw(base_family = "IPAexGothic",
+              base_size = 12)
+```
+
+## themeをかえる(2)
+
+```{r theme_classic, dev="cairo_pdf", fig.width=4.5, fig.height=3, out.height="6cm", cache=TRUE}
+p4 + theme_classic(base_family = "NotoSansCJKjp-Regular",
+                   base_size = 12)
+```
+
+<!-- ggthemeパッケージに各種テーマあり -->
+
 ## facet
 
 **`facet_wrap`**関数を使用して，種ごとに分割して表示。
@@ -375,26 +391,12 @@ p4 + facet_wrap(~ Species) + theme(legend.position = "none")
 ## facet_grid
 
 ```{r facet_grid, dev="cairo_pdf", fig.width=6, fig.height=4, out.height="5.5cm", cache=TRUE}
-ggplot(gy_data, aes(X, Y, colour = Species, size = DBH)) +
+ggplot(g_data, aes(X, Y, colour = Species, size = DBH)) +
   geom_point(alpha = 0.7) + coord_fixed() +
   scale_colour_discrete(guide = "none") +
   facet_grid(Year ~ Species)
 ```
 
-
-## themeをかえる(1)
-
-```{r theme_bw,dev="cairo_pdf", fig.width=4.5, fig.height=3, out.height="6.5cm", cache=TRUE}
-p4 + theme_bw(base_family = "IPAexGothic")
-```
-
-## themeをかえる(2)
-
-```{r theme_classic, dev="cairo_pdf", fig.width=4.5, fig.height=3, out.height="6.5cm", cache=TRUE}
-p4 + theme_classic(base_family = "NotoSansCJKjp-Regular")
-```
-
-<!-- ggthemeパッケージに各種テーマあり -->
 
 ## ここまでのまとめ
 
@@ -487,7 +489,7 @@ ggplot(q_data) + geom_line(aes(Year, Diameter, colour = No)) +
 ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 ```
 
-## 別のデータを重ねる(1)
+## 加工したプロットを重ねる
 
 アラカシNo.21の各年の肥大成長量を用意する。
 
@@ -499,9 +501,18 @@ p1 <- ggplot(q21) + geom_line(aes(Year, Growth))
 print(p1)
 ```
 
-## カルマンフィルタによるフィルタリング
+## 平滑化
 
-フィルタリングした値と95%信頼区間をデータフレーム`kf`に格納する。
+**`geom_smooth`**関数で平滑化できる。  
+**`geom_smooth`**`(method = "lm")`とすると直線回帰。
+
+```{r geom_smooth, fig.width=4.5, fig.height=3, out.height="5.5cm", echo = TRUE, cache=TRUE}
+p1 + geom_smooth(aes(Year, Growth), method = "loess")
+```
+
+## 別のデータフレームを重ねる(1)
+
+dlmパッケージを使用して，カルマンフィルタでフィルタリングした値と95%信頼区間をデータフレーム`kf`に格納する。
 
 ```{r dlm, message=FALSE, cache=TRUE}
 library(dlm)
@@ -522,7 +533,7 @@ kf <- data.frame(Year = q21$Year,
          Upper = qnorm(0.975, Filter, sd))
 ```
 
-## 別のデータを重ねる(2)
+## 別のデータフレームを重ねる(2)
 
 カルマンフィルタでフィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
 表示する。
@@ -531,15 +542,6 @@ kf <- data.frame(Year = q21$Year,
 p1 + geom_line(data = kf, aes(Year, Filter), colour = "red") +
   geom_ribbon(data = kf, aes(Year, ymin = Lower, ymax = Upper),
               colour = "grey", alpha = 0.4)
-```
-
-## 平滑化
-
-**`geom_smooth`**関数で平滑化できる。  
-**`geom_smooth`**`(method = "lm")`とすると直線回帰。
-
-```{r geom_smooth, fig.width=4.5, fig.height=3, out.height="5.5cm", echo = TRUE, cache=TRUE}
-p1 + geom_smooth(aes(Year, Growth), method = "loess")
 ```
 
 ## 箱ひげ図
