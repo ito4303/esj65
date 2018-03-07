@@ -380,7 +380,7 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular",
 
 <!-- ggthemeパッケージに各種テーマあり -->
 
-## facet
+## facet: 分割して表示
 
 **`facet_wrap`**関数を使用して，種ごとに分割して表示。
 
@@ -388,11 +388,11 @@ p4 + theme_classic(base_family = "NotoSansCJKjp-Regular",
 p4 + facet_wrap(~ Species) + theme(legend.position = "none")
 ```
 
-## facet_grid
+## facet_grid: 縦横に分割
 
 ```{r facet_grid, dev="cairo_pdf", fig.width=6, fig.height=4, out.height="5.5cm", cache=TRUE}
 ggplot(g_data, aes(X, Y, colour = Species, size = DBH)) +
-  geom_point(alpha = 0.7) + coord_fixed() +
+  geom_point(alpha = 0.7) + coord_fixed() + scale_y_reverse() +
   scale_colour_discrete(guide = "none") +
   facet_grid(Year ~ Species)
 ```
@@ -639,7 +639,7 @@ p + stat_count(geom = "bar", fill = "grey50")
 - `geom`ではなくて`stat`で描画レイヤーを追加することも可能。
 
 
-## XYZのデータ
+## 3次元のデータ
 
 ```{r raster_data}
 r <- function(x, y) (-0.00002 * (x - 40)^2 + 0.05) * 0.04 * y
@@ -650,7 +650,7 @@ print(raster_data[5000:5005, ])
 
 \footnotesize データを生成する関数は，島谷(2017) 5.3節より。
 
-## ラスター
+## ラスターで表示
 
 **`geom_raster`**関数
 
@@ -659,7 +659,7 @@ p <- ggplot(raster_data, aes(x, y))
 p + geom_raster(aes(fill = z)) + coord_fixed()
 ```
 
-## 等高線
+## 等高線で表示
 
 **`geom_contour`**関数
 
@@ -679,7 +679,7 @@ hokkaido_url <- getKSJURL("N03", prefCode = 1) %>%
 hokkaido_2017 <- getKSJData(hokkaido_url$zipFileUrl)
 ```
 
-## データの整形
+## 地図データの整形
 
 ```{r filter_sapporo, message=FALSE, warning=FALSE, cache=TRUE}
 library(sf)
