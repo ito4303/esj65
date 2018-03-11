@@ -53,14 +53,17 @@ ggplot(data = iris,
 
 \LARGE
 
--  ggplot2パッケージ
-    - gg: Grammer of Graphics
+>- ggplot2パッケージ
+
+\normalsize
+
+>- gg: Grammer of Graphics
 
 \large
 
-- 統一された文法でさまざまな種類のグラフをえがける。
-- 関連パッケージもどんどんできている。
-    - GGally, ggmcmc, ggmap, ggthemes, egg\dots
+>- 統一された文法でさまざまな種類のグラフをえがける。
+>- 関連パッケージもどんどんできている。
+>- GGally, ggmcmc, ggmap, ggthemes, egg\dots
 
 <!--
 GGally: 散布図行列, モデルの係数のプロット, Kaplan-Meierプロットなどさまざまなグラフ
@@ -86,9 +89,9 @@ egg: 複数のグラフを並べるなど
 
 \Large
 
->- 得られたデータを可視化する。
+- 得られたデータを可視化する。
 
->- データにあった解析
+- データにあった解析
 
 ## たとえば
 
@@ -119,17 +122,17 @@ ggplot(df) +
 
 ## もうひとつの目的
 
->- グラフ作成に，手作業（コピー&ペースト）をへらす。できれば なくす。
->- R（と，RStudioなど）で自動化する。
+- グラフ作成に，手作業（コピー&ペースト）をへらす。できれば なくす。\footnote{baseグラフィックでも可能ですが。}
+- R（と，RStudioなど）で自動化する。
 
 \Large\bfseries
 
->- 手作業に由来するまちがいをなくす。
->- Reproducible Research（の一部）
+- 手作業に由来するまちがいをなくす。
+- Reproducible Research（の一部）
 
 \normalsize\mdseries
 
->- この発表資料も，RStudioで一括処理
+- この発表資料も，R Markdownで作成して，RStudio（とLaTeX）で一括処理。
 
 # ggplot2をつかってみる
 
@@ -211,11 +214,9 @@ print(p)
 
 ## geom関数
 
-`geom_point` 関数: 散布図を描画（レイヤーに追加）する関数
-
-`mapping` 引数: 変数のマッピングを渡す。
-
-`aes` 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
+- **`geom_point`** 関数: 散布図を描画（レイヤーに追加）する関数
+    - `mapping` 引数: 変数のマッピングを渡す。
+- **`aes`** 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
 
 \textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに`+'演算子で，レイヤーを追加する。}
 
@@ -342,7 +343,7 @@ ggsave("p4.pdf", device = cairo_pdf,
 `device = cairo_pdf`  
 とする。
 \footnote{macOSではXQuartzのインストールが必要になるかもしれない。}
-ただし，すべてのフォントでうまくいくとは限らない。
+\footnote{ただし，すべてのフォントでうまくいくとは限らない。}
 
 <!--
 \includegraphics[width=6cm]{p4.pdf}
@@ -399,6 +400,8 @@ ggplot(g_data, aes(X, Y, colour = Species, size = DBH)) +
 
 
 ## ここまでのまとめ
+
+\Large
 
 - `ggplot`関数でオブジェクト生成。
 - `aes`関数で，データフレームのどのフィールドをどのグラフ要素に割り当てるかを指定する。
@@ -567,7 +570,9 @@ ggplot(iris) + geom_boxplot(aes(Species, Sepal.Width)) +
 
 **`geom_histogram`**関数
 
-```{r histogram, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
+`fill`引数で塗りつぶしの指定。
+
+```{r histogram, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
 ggplot(iris) +
   geom_histogram(aes(Sepal.Length, fill = Species),
                  binwidth = 0.5)
@@ -575,9 +580,19 @@ ggplot(iris) +
 
 ## ヒストグラム(2)
 
+`colour`と`fill`を別に指定。
+
+```{r histogram2, fig.width=4.5, fig.height=3, out.height="5cm", cache=TRUE}
+ggplot(iris) +
+  geom_histogram(aes(Sepal.Length, fill = Species),
+                 colour = "grey10", binwidth = 0.5)
+```
+
+## ヒストグラム(3)
+
 `position = "dodge"`: 積み重ねずに ずらす。
 
-```{r histogram2, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
+```{r histogram3, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
 ggplot(iris) +
   geom_histogram(aes(Sepal.Length, fill = Species),
                  binwidth = 0.5, position = "dodge")
