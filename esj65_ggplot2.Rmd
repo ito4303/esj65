@@ -216,7 +216,7 @@ print(p)
 
 - **`geom_point`** 関数: 散布図を描画（レイヤーに追加）する関数
     - `mapping` 引数: 変数のマッピングを渡す。
-- **`aes`** 関数: 変数とグラフ要素とのaesthetic mappingを生成する。
+- **`aes`** 関数: 変数とグラフ要素とのaesthetic mappingを生成
 
 \textcolor{red}{\bfseries \texttt{ggplot}オブジェクトに`+'演算子で，レイヤーを追加する。}
 
