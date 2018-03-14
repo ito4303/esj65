@@ -552,13 +552,13 @@ kf <- data.frame(Year = q21$Year,
 
 ## 別のデータフレームから(2)
 
-カルマンフィルタでフィルタリングした値（赤線）と95%信頼区間（灰色の領域）を重ねて
+カルマンフィルタでフィルタリングした値（赤線）と95%信頼区間（うすい赤色の領域）を重ねて
 表示する。
 
 ```{r geom_ribbon, fig.width=4.5, fig.height=3, out.height="4.5cm", cache=TRUE}
 p1 + geom_line(data = kf, aes(Year, Filter), colour = "red") +
   geom_ribbon(data = kf, aes(Year, ymin = Lower, ymax = Upper),
-              colour = "grey", alpha = 0.4)
+              fill = "red", alpha = 0.3)
 ```
 
 ## 箱ひげ図
