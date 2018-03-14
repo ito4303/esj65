@@ -493,17 +493,17 @@ ggplot(q_data) + geom_line(aes(Year, Diameter))
 
 うまくいかない。
 
+## groupを指定
+
+```{r geom_line5, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
+ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
+```
+
 ## colourを指定
 
 ```{r geom_line4, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
 ggplot(q_data) + geom_line(aes(Year, Diameter, colour = No)) +
    guides(colour = guide_legend(ncol = 2))
-```
-
-## groupを指定
-
-```{r geom_line5, fig.width=4.5, fig.height=3, out.height="5.5cm", cache=TRUE}
-ggplot(q_data) + geom_line(aes(Year, Diameter, group = No))
 ```
 
 ## 加工したプロットを重ねる
