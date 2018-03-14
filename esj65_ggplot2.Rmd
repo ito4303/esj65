@@ -213,7 +213,7 @@ p <- ggplot(data = g_2014)
 print(p)
 ```
 
-## geom関数
+## geom_*関数
 
 - **`geom_point`** 関数: 散布図を描画（レイヤーに追加）する関数
     - `mapping` 引数: 変数のマッピングを渡す。
